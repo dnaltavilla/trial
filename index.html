@@ -6,331 +6,348 @@
     <title>FireSTUDIO myREFERENCE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://www.youtube.com/iframe_api"></script>
     <style>
-        html, body {
-            height: 100%;
-            overflow: hidden;
-            background-color: #111827; /* Colore di sfondo base */
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            touch-action: manipulation;
-        }
+        html, body { height: 100%; overflow: hidden; background-color: #111827; }
+        body { font-family: 'Inter', sans-serif; touch-action: manipulation; }
         .file-input { display: none; }
-        .file-input + label { 
-            cursor: pointer;
-            background: linear-gradient(to right, #8B5CF6, #F97316);
-            transition: all 0.3s ease;
-        }
-        .file-input + label:hover {
-            box-shadow: 0 0 15px rgba(249, 115, 22, 0.5);
-        }
-        .playing {
-            background-color: #10B981 !important;
-            color: white !important;
-            box-shadow: 0 0 20px #10B981, inset 0 0 5px rgba(255,255,255,0.3);
-            transform: scale(1.02);
-        }
-        input[type=range] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 6px;
-            background: #4B5563;
-            border-radius: 3px;
-            outline: none;
-            transition: opacity .2s;
-        }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #F97316; /* Arancione per il thumb */
-            cursor: pointer;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-        input[type=range]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: #F97316;
-            cursor: pointer;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-        .main-container {
-             height: 100vh;
-             display: flex;
-             flex-direction: column;
-        }
-        .panel {
-            background-color: #1F2937; /* Grigio scuro per i pannelli */
-            border: 1px solid #374151;
-        }
+        .split-button-container { display: flex; border-radius: 0.5rem; overflow: hidden; background: linear-gradient(to right, #8B5CF6, #F97316); transition: all 0.3s ease; }
+        .split-button-container:hover { box-shadow: 0 0 15px rgba(249, 115, 22, 0.5); }
+        .split-button-part { flex: 1; padding: 0.5rem; cursor: pointer; display: flex; justify-content: center; align-items: center; background-color: transparent; color: white; font-size: 1.25rem; transition: all 0.2s ease; }
+        .split-button-part:hover { background-color: rgba(255, 255, 255, 0.2); }
+        .split-button-part:first-child { border-right: 1px solid rgba(255, 255, 255, 0.3); }
+        .youtube-btn.disabled { cursor: not-allowed; background-color: rgba(0,0,0,0.4); filter: grayscale(80%); pointer-events: none; }
+        .playing { background-color: #10B981 !important; color: white !important; box-shadow: 0 0 20px #10B981, inset 0 0 5px rgba(255,255,255,0.3); transform: scale(1.02); }
+        input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; background: #4B5563; border-radius: 3px; outline: none; transition: opacity .2s; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: #F97316; cursor: pointer; border-radius: 50%; border: 2px solid white; }
+        .main-container { height: 100vh; display: flex; flex-direction: column; }
+        .panel { background-color: #1F2937; border: 1px solid #374151; }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200 flex items-center justify-center">
 
     <div class="main-container w-full h-full p-2 sm:p-4">
-        
         <div class="flex-shrink-0 flex justify-between items-center pb-2 px-2">
             <div>
                 <h1 class="text-xl sm:text-2xl font-bold tracking-wider text-white">FireSTUDIO <span class="font-light text-orange-400">myREFERENCE</span></h1>
                 <p class="text-xs text-gray-500">by Marco Masdea - Fire Music - Palmi (RC)</p>
             </div>
             <div class="flex items-center gap-3">
-                <button id="clearBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" title="Pulisci tutto">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                </button>
-                <span class="text-xs text-gray-500">v. 1.5</span>
-                <button id="settingsBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" title="Impostazioni">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                </button>
+                <button id="clearBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" title="Pulisci tutto"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
+                <span class="text-xs text-gray-500">v. 3.2</span>
+                <button id="settingsBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" title="Impostazioni"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg></button>
             </div>
         </div>
         
-        <!-- Contenitore flessibile corretto con 'sm:' breakpoint -->
         <div class="flex-grow flex flex-col sm:flex-row gap-4 min-h-0">
-
-            <!-- Colonna Sinistra (Controlli) - Corretta con 'sm:' breakpoint -->
             <div class="panel rounded-2xl shadow-xl p-4 flex flex-col gap-4 w-full sm:w-1/3">
                 <div class="grid grid-cols-2 gap-3">
-                    <div class="text-center"><input type="file" id="file1" class="file-input" accept="audio/*,.mp3,.wav,.ogg,.m4a"><label for="file1" class="block w-full text-white font-bold py-2 px-3 rounded-lg text-sm"><span>Carica 1</span></label><p id="filename1" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div>
-                    <div class="text-center"><input type="file" id="file2" class="file-input" accept="audio/*,.mp3,.wav,.ogg,.m4a"><label for="file2" class="block w-full text-white font-bold py-2 px-3 rounded-lg text-sm"><span>Carica 2</span></label><p id="filename2" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div>
-                    <div class="text-center"><input type="file" id="file3" class="file-input" accept="audio/*,.mp3,.wav,.ogg,.m4a"><label for="file3" class="block w-full text-white font-bold py-2 px-3 rounded-lg text-sm"><span>Carica 3</span></label><p id="filename3" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div>
-                    <div class="text-center"><input type="file" id="file4" class="file-input" accept="audio/*,.mp3,.wav,.ogg,.m4a"><label for="file4" class="block w-full text-white font-bold py-2 px-3 rounded-lg text-sm"><span>Carica 4</span></label><p id="filename4" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div>
+                    <input type="file" id="file1" class="file-input" accept="audio/*,.mp3,.wav,.ogg,.m4a" multiple><input type="file" id="file2" class="file-input" accept="audio/*,.mp3,.wav,.ogg,.m4a" multiple><input type="file" id="file3" class="file-input" accept="audio/*,.mp3,.wav,.ogg,.m4a" multiple><input type="file" id="file4" class="file-input" accept="audio/*,.mp3,.wav,.ogg,.m4a" multiple>
+                    <div><div class="split-button-container"><label for="file1" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="0" title="Incolla link YouTube">▶</div></div><p id="filename1" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div>
+                    <div><div class="split-button-container"><label for="file2" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="1" title="Incolla link YouTube">▶</div></div><p id="filename2" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div>
+                    <div><div class="split-button-container"><label for="file3" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="2" title="Incolla link YouTube">▶</div></div><p id="filename3" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div>
+                    <div><div class="split-button-container"><label for="file4" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="3" title="Incolla link YouTube">▶</div></div><p id="filename4" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div>
                 </div>
                 <div class="bg-gray-900/50 rounded-lg p-3 space-y-3 mt-auto">
-                    <div class="flex items-center space-x-2">
-                        <span id="currentTime" class="text-sm font-mono text-gray-400">00:00</span>
-                        <input type="range" id="seekBar" value="0" class="w-full" disabled>
-                        <span id="duration" class="text-sm font-mono text-gray-400">00:00</span>
-                    </div>
-                    <div class="flex justify-center items-center space-x-4">
+                    <div class="flex items-center space-x-2"><span id="currentTime" class="text-sm font-mono text-gray-400">00:00</span><input type="range" id="seekBar" value="0" class="w-full" disabled><span id="duration" class="text-sm font-mono text-gray-400">00:00</span></div>
+                    <div class="flex justify-center items-center space-x-3">
                          <button id="skipBackwardBtn" class="p-2 rounded-full hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:hover:bg-transparent" disabled><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" /></svg></button>
-                        <span id="skipAmountLabel" class="font-mono text-lg font-bold text-orange-400"></span>
+                         <span id="skipAmountLabel" class="font-mono text-lg font-bold text-orange-400"></span>
+                         <button id="playPauseBtn" class="p-2 rounded-full text-white hover:bg-orange-500 transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:text-gray-600" disabled title="Pausa / Riprendi">
+                            <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 hidden" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
+                            <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                         </button>
                          <button id="skipForwardBtn" class="p-2 rounded-full hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:hover:bg-transparent" disabled><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></button>
                     </div>
                 </div>
             </div>
-
-            <!-- Colonna Destra (Pulsanti Play) - Corretta con 'sm:' breakpoint -->
             <div class="panel rounded-2xl shadow-xl p-4 w-full sm:w-2/3 flex-grow">
                 <div class="grid grid-cols-2 gap-3 h-full">
-                    <button id="playBtn1" disabled class="bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50">1</button>
-                    <button id="playBtn2" disabled class="bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50">2</button>
-                    <button id="playBtn3" disabled class="bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50">3</button>
-                    <button id="playBtn4" disabled class="bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50">4</button>
+                    <button id="playBtn1" disabled class="bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50">1</button><button id="playBtn2" disabled class="bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50">2</button><button id="playBtn3" disabled class="bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50">3</button><button id="playBtn4" disabled class="bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50">4</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50">
+    <div id="youtube-players" class="absolute -left-full"><div id="yt-player-0"></div><div id="yt-player-1"></div><div id="yt-player-2"></div><div id="yt-player-3"></div></div>
+    
+    <div id="youtubeModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50">
         <div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4">
-            <h2 class="text-2xl font-bold mb-6 text-white">Impostazioni</h2>
-            <div class="space-y-6">
-                <div class="flex items-center justify-between"><label for="autoSkipSwitch" class="text-lg">Salto Automatico</label><button id="autoSkipSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="autoSkipSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div>
-                <div class="flex items-center justify-between"><label for="autoSkipDuration">Durata Auto-Skip (s)</label><input type="number" id="autoSkipDuration" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div>
-                <div class="flex items-center justify-between"><label for="skipInterval">Intervallo Salto (s)</label><input type="number" id="skipInterval" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div>
+            <h2 class="text-2xl font-bold mb-4 text-white">Incolla Link YouTube</h2>
+            <input type="url" id="youtubeLinkInput" class="w-full bg-gray-700 rounded-md p-3 text-white placeholder-gray-400" placeholder="https://www.youtube.com/watch?v=...">
+            <div class="flex justify-end gap-4 mt-6">
+                <button id="cancelYoutubeBtn" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors">Annulla</button>
+                <button id="confirmYoutubeBtn" class="bg-orange-600 hover:bg-orange-500 text-white font-bold py-2 px-6 rounded-lg transition-colors">Conferma</button>
             </div>
-            <button id="closeSettingsBtn" class="mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity">Chiudi</button>
         </div>
     </div>
 
+    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-6 text-white">Impostazioni</h2><div class="space-y-6"><div class="flex items-center justify-between"><label for="autoSkipSwitch" class="text-lg">Salto Automatico</label><button id="autoSkipSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="autoSkipSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div><div class="flex items-center justify-between"><label for="autoSkipDuration">Durata Auto-Skip (s)</label><input type="number" id="autoSkipDuration" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div><div class="flex items-center justify-between"><label for="skipInterval">Intervallo Salto (s)</label><input type="number" id="skipInterval" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div></div><button id="closeSettingsBtn" class="mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity">Chiudi</button></div></div>
     <audio id="audio1"></audio><audio id="audio2"></audio><audio id="audio3"></audio><audio id="audio4"></audio>
 
     <script>
+    let app = {};
+    let ytPlayers = [];
+    let ytApiReady = false;
+    
+    function onPlayerError(event, playerIndex) { app.handleError(event, playerIndex); }
+    function onPlayerStateChange(event, playerIndex) { app.handleStateChange(event, playerIndex); }
+    function onYouTubeIframeAPIReady() {
+        ytApiReady = true;
+        for (let i = 0; i < 4; i++) {
+            ytPlayers[i] = new YT.Player(`yt-player-${i}`, {
+                height: '0', width: '0',
+                events: {
+                    'onStateChange': (event) => onPlayerStateChange(event, i),
+                    'onError': (event) => onPlayerError(event, i)
+                }
+            });
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-        const audioPlayers = Array.from({ length: 4 }, (_, i) => document.getElementById(`audio${i + 1}`));
+        app.slots = Array.from({ length: 4 }, (_, i) => ({ type: null, audioPlayer: document.getElementById(`audio${i+1}`), ytPlayer: null, duration: 0, titlePollInterval: null }));
+        app.filenameDisplays = Array.from({ length: 4 }, (_, i) => document.getElementById(`filename${i + 1}`));
+        app.activeSlotIndex = -1;
+        app.targetSlotForLink = -1;
+
         const fileInputs = Array.from({ length: 4 }, (_, i) => document.getElementById(`file${i + 1}`));
-        const filenameDisplays = Array.from({ length: 4 }, (_, i) => document.getElementById(`filename${i + 1}`));
         const playButtons = Array.from({ length: 4 }, (_, i) => document.getElementById(`playBtn${i + 1}`));
+        const youtubeBtns = document.querySelectorAll('.youtube-btn');
         const seekBar = document.getElementById('seekBar');
         const currentTimeEl = document.getElementById('currentTime');
         const durationEl = document.getElementById('duration');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
         const skipForwardBtn = document.getElementById('skipForwardBtn');
         const skipBackwardBtn = document.getElementById('skipBackwardBtn');
         const skipAmountLabel = document.getElementById('skipAmountLabel');
         const settingsBtn = document.getElementById('settingsBtn');
         const clearBtn = document.getElementById('clearBtn');
-        const settingsModal = document.getElementById('settingsModal');
-        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-        const autoSkipSwitch = document.getElementById('autoSkipSwitch');
-        const autoSkipSwitchKnob = document.getElementById('autoSkipSwitchKnob');
-        const autoSkipDurationInput = document.getElementById('autoSkipDuration');
-        const skipIntervalInput = document.getElementById('skipInterval');
+        
+        // Elementi del nuovo modal
+        const youtubeModal = document.getElementById('youtubeModal');
+        const youtubeLinkInput = document.getElementById('youtubeLinkInput');
+        const confirmYoutubeBtn = document.getElementById('confirmYoutubeBtn');
+        const cancelYoutubeBtn = document.getElementById('cancelYoutubeBtn');
 
-        let activeAudioIndex = -1;
-        let autoSkipTimer = null;
+        let autoSkipTimer = null, masterTimeUpdater = null;
         let settings = { autoSkipEnabled: false, autoSkipDuration: 5, skipInterval: 10 };
 
-        function loadSettings() {
-            const savedSettings = JSON.parse(localStorage.getItem('audioComparerSettings'));
-            if (savedSettings) { settings = savedSettings; }
-            autoSkipDurationInput.value = settings.autoSkipDuration;
-            skipIntervalInput.value = settings.skipInterval;
-            skipAmountLabel.textContent = `${settings.skipInterval}s`;
-            updateAutoSkipSwitchUI(settings.autoSkipEnabled);
-        }
-
-        function saveSettings() { localStorage.setItem('audioComparerSettings', JSON.stringify(settings)); }
-        function formatTime(seconds) {
-            const min = Math.floor(seconds / 60);
-            const sec = Math.floor(seconds % 60);
-            return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
-        }
-        function updateAutoSkipSwitchUI(isEnabled) {
-            if (isEnabled) {
-                autoSkipSwitch.classList.remove('bg-gray-600');
-                autoSkipSwitch.classList.add('bg-orange-500');
-                autoSkipSwitchKnob.style.transform = 'translateX(1.25rem)';
-            } else {
-                autoSkipSwitch.classList.add('bg-gray-600');
-                autoSkipSwitch.classList.remove('bg-orange-500');
-                autoSkipSwitchKnob.style.transform = 'translateX(0.25rem)';
+        const checkYtApiReady = setInterval(() => {
+            if (ytApiReady && ytPlayers.every(p => typeof p.loadVideoById === 'function')) {
+                app.slots.forEach((slot, i) => slot.ytPlayer = ytPlayers[i]);
+                youtubeBtns.forEach(btn => btn.classList.remove('disabled'));
+                clearInterval(checkYtApiReady);
             }
-        }
-        function stopAllAudio() {
-            audioPlayers.forEach(player => player.pause());
-            playButtons.forEach(btn => btn.classList.remove('playing'));
+        }, 100);
+        
+        function startUpdatingUI() { if (!masterTimeUpdater) masterTimeUpdater = setInterval(updatePlayerUI, 250); }
+        function stopUpdatingUI() { clearInterval(masterTimeUpdater); masterTimeUpdater = null; }
+
+        function stopAll(exceptIndex = -1) {
+            stopUpdatingUI();
+            app.slots.forEach((slot, index) => {
+                if (index !== exceptIndex) {
+                    if (slot.type === 'audio') slot.audioPlayer.pause();
+                    if (slot.type === 'youtube' && slot.ytPlayer?.pauseVideo) slot.ytPlayer.pauseVideo();
+                }
+            });
+            playButtons.forEach((btn, index) => { if (index !== exceptIndex) btn.classList.remove('playing'); });
             if (autoSkipTimer) clearTimeout(autoSkipTimer);
         }
 
-        function playTrack(index) {
-            const targetPlayer = audioPlayers[index];
-            const isTargetPlaying = !targetPlayer.paused;
-
-            stopAllAudio(); 
-
-            if (isTargetPlaying) {
-                activeAudioIndex = -1;
+        function playSlot(index) {
+            if (!app.slots[index].type) return;
+            const slot = app.slots[index];
+            let isPlaying;
+            if (slot.type === 'audio') isPlaying = !slot.audioPlayer.paused;
+            else { const s = slot.ytPlayer.getPlayerState(); isPlaying = s === YT.PlayerState.PLAYING || s === YT.PlayerState.BUFFERING; }
+            
+            stopAll(index);
+            if (isPlaying) {
+                if (slot.type === 'audio') slot.audioPlayer.pause();
+                else slot.ytPlayer.pauseVideo();
             } else {
-                targetPlayer.play();
-                activeAudioIndex = index;
+                if (slot.type === 'audio') slot.audioPlayer.play();
+                else slot.ytPlayer.playVideo();
+                app.activeSlotIndex = index;
                 playButtons[index].classList.add('playing');
-                
-                if (settings.autoSkipEnabled) {
-                    startAutoSkipTimer();
-                }
+                startUpdatingUI();
+                if (settings.autoSkipEnabled) startAutoSkipTimer();
+            }
+        }
+
+        function updatePlayerUI() {
+            const isSlotActive = app.activeSlotIndex !== -1, slot = isSlotActive ? app.slots[app.activeSlotIndex] : null;
+            seekBar.disabled = !isSlotActive; skipForwardBtn.disabled = !isSlotActive; skipBackwardBtn.disabled = !isSlotActive; playPauseBtn.disabled = !isSlotActive;
+
+            if (!isSlotActive || !slot.type) {
+                playIcon.classList.add('hidden'); pauseIcon.classList.remove('hidden');
+                currentTimeEl.textContent = "00:00"; durationEl.textContent = "00:00";
+                seekBar.value = 0; stopUpdatingUI(); return;
             }
             
-            updatePlayerUI();
+            let isPlaying, currentTime = 0, duration = 0;
+            if (slot.type === 'audio') {
+                isPlaying = !slot.audioPlayer.paused;
+                currentTime = slot.audioPlayer.currentTime;
+                duration = isNaN(slot.audioPlayer.duration) ? slot.duration : slot.audioPlayer.duration;
+            } else if (slot.type === 'youtube' && slot.ytPlayer?.getPlayerState) {
+                const s = slot.ytPlayer.getPlayerState(); isPlaying = s === YT.PlayerState.PLAYING || s === YT.PlayerState.BUFFERING;
+                currentTime = slot.ytPlayer.getCurrentTime() || 0;
+                duration = slot.ytPlayer.getDuration() || 0;
+            }
+            slot.duration = duration;
+            
+            if (isPlaying) { playIcon.classList.add('hidden'); pauseIcon.classList.remove('hidden'); }
+            else { playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); stopUpdatingUI(); }
+            
+            seekBar.max = duration; seekBar.value = currentTime;
+            currentTimeEl.textContent = formatTime(currentTime); durationEl.textContent = formatTime(duration);
         }
 
-        function startAutoSkipTimer() {
-             if (autoSkipTimer) clearTimeout(autoSkipTimer);
-             autoSkipTimer = setTimeout(() => {
-                let nextIndex = activeAudioIndex + 1;
-                for (let i = 0; i < audioPlayers.length; i++) {
-                    if (nextIndex >= audioPlayers.length) nextIndex = 0;
-                    if (!playButtons[nextIndex].disabled) {
-                         playTrack(nextIndex);
-                         return;
-                    }
-                    nextIndex++;
-                }
-             }, settings.autoSkipDuration * 1000);
-        }
-        function updatePlayerUI() {
-            const player = activeAudioIndex !== -1 ? audioPlayers[activeAudioIndex] : null;
-            if (!player) {
-                seekBar.disabled = true;
-                skipForwardBtn.disabled = true;
-                skipBackwardBtn.disabled = true;
-                currentTimeEl.textContent = "00:00";
-                durationEl.textContent = "00:00";
-                seekBar.value = 0;
-                return;
+        fileInputs.forEach((input, startIndex) => {
+            input.addEventListener('change', (e) => {
+                Array.from(e.target.files).forEach((file, fileIndex) => { if (startIndex + fileIndex < 4) loadAudioFile(file, startIndex + fileIndex); });
+                input.value = null;
+            });
+        });
+
+        // LOGICA NUOVO MODAL
+        youtubeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if(btn.classList.contains('disabled')) return;
+                app.targetSlotForLink = parseInt(btn.dataset.index);
+                youtubeModal.classList.remove('hidden');
+                youtubeLinkInput.focus();
+            });
+        });
+
+        confirmYoutubeBtn.addEventListener('click', () => {
+            const url = youtubeLinkInput.value;
+            if (url && app.targetSlotForLink !== -1) {
+                loadYoutubeLink(url, app.targetSlotForLink);
             }
-            seekBar.disabled = false;
-            skipForwardBtn.disabled = false;
-            skipBackwardBtn.disabled = false;
-            const duration = isNaN(player.duration) ? 0 : player.duration;
-            seekBar.max = duration;
-            seekBar.value = player.currentTime;
-            currentTimeEl.textContent = formatTime(player.currentTime);
-            durationEl.textContent = formatTime(duration);
+            youtubeLinkInput.value = '';
+            youtubeModal.classList.add('hidden');
+            app.targetSlotForLink = -1;
+        });
+
+        cancelYoutubeBtn.addEventListener('click', () => {
+            youtubeLinkInput.value = '';
+            youtubeModal.classList.add('hidden');
+            app.targetSlotForLink = -1;
+        });
+
+
+        function loadAudioFile(file, index) {
+            clearSlot(index);
+            app.slots[index].type = 'audio'; app.slots[index].audioPlayer.src = URL.createObjectURL(file);
+            app.filenameDisplays[index].textContent = file.name; playButtons[index].disabled = false;
+        }
+
+        function loadYoutubeLink(url, index) {
+            const videoId = parseYoutubeId(url);
+            if (!videoId) { alert("Link YouTube non valido."); return; }
+            clearSlot(index);
+            app.slots[index].type = 'youtube';
+            app.slots[index].ytPlayer.cueVideoById(videoId);
+            playButtons[index].disabled = false;
+        }
+        
+        function parseYoutubeId(url) {
+            const match = url.match(/^.*(?:youtu.be(?:\.com)?\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]{11}).*/);
+            return (match && match[1]) ? match[1] : null;
+        }
+        
+        function clearSlot(index) {
+            const slot = app.slots[index];
+            if (slot.titlePollInterval) clearInterval(slot.titlePollInterval);
+            if (slot.type === 'audio' && slot.audioPlayer.src) {
+                URL.revokeObjectURL(slot.audioPlayer.src); slot.audioPlayer.removeAttribute('src');
+            } else if (slot.type === 'youtube' && slot.ytPlayer?.stopVideo) {
+                slot.ytPlayer.stopVideo();
+            }
+            slot.type = null; app.filenameDisplays[index].textContent = '';
         }
 
         function clearAllFiles() {
-            stopAllAudio();
-            audioPlayers.forEach((player, index) => {
-                if (player.src) {
-                    URL.revokeObjectURL(player.src);
-                }
-                player.removeAttribute('src');
-                fileInputs[index].value = null;
-                filenameDisplays[index].textContent = '';
-                playButtons[index].disabled = true;
-                playButtons[index].classList.remove('text-white', 'playing');
-                playButtons[index].classList.add('text-gray-500', 'disabled:opacity-50');
-            });
-            activeAudioIndex = -1;
-            updatePlayerUI();
+            stopAll();
+            for (let i=0; i<4; i++) { clearSlot(i); playButtons[i].disabled = true; }
+            app.activeSlotIndex = -1; updatePlayerUI();
         }
 
-        fileInputs.forEach((input, index) => {
-            input.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const url = URL.createObjectURL(file);
-                    audioPlayers[index].src = url;
-                    filenameDisplays[index].textContent = file.name;
-                    playButtons[index].disabled = false;
-                    playButtons[index].classList.remove('text-gray-500', 'disabled:opacity-50');
-                    playButtons[index].classList.add('text-white');
-                    audioPlayers[index].addEventListener('loadedmetadata', () => {
-                         if (activeAudioIndex === -1 || activeAudioIndex === index) { updatePlayerUI(); }
-                    });
-                }
-            });
-        });
-
-        playButtons.forEach((button, index) => { button.addEventListener('click', () => playTrack(index)); });
-
-        audioPlayers.forEach((player, index) => {
-            player.addEventListener('timeupdate', () => { if (activeAudioIndex === index) { updatePlayerUI(); } });
-            player.addEventListener('pause', () => { if(activeAudioIndex === index) { playButtons[index].classList.remove('playing'); }});
-            player.addEventListener('ended', () => {
-                if (activeAudioIndex === index && !settings.autoSkipEnabled) {
-                     player.currentTime = 0;
-                     player.pause();
-                }
-            });
-        });
-
-        seekBar.addEventListener('input', (e) => { if (activeAudioIndex !== -1) { audioPlayers[activeAudioIndex].currentTime = e.target.value; } });
-        skipForwardBtn.addEventListener('click', () => { if (activeAudioIndex !== -1) { audioPlayers[activeAudioIndex].currentTime += settings.skipInterval; } });
-        skipBackwardBtn.addEventListener('click', () => { if (activeAudioIndex !== -1) { audioPlayers[activeAudioIndex].currentTime -= settings.skipInterval; } });
-        settingsBtn.addEventListener('click', () => settingsModal.classList.remove('hidden'));
-        clearBtn.addEventListener('click', clearAllFiles);
-        closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
-
-        autoSkipSwitch.addEventListener('click', () => {
-            settings.autoSkipEnabled = !settings.autoSkipEnabled;
-            updateAutoSkipSwitchUI(settings.autoSkipEnabled);
-            saveSettings();
-            if (settings.autoSkipEnabled && activeAudioIndex !== -1 && !audioPlayers[activeAudioIndex].paused) {
-                startAutoSkipTimer();
-            } else { if (autoSkipTimer) clearTimeout(autoSkipTimer); }
-        });
-
-        autoSkipDurationInput.addEventListener('change', (e) => {
-            const val = parseInt(e.target.value, 10);
-            if (val > 0) { settings.autoSkipDuration = val; saveSettings(); }
-        });
-        skipIntervalInput.addEventListener('change', (e) => {
-            const val = parseInt(e.target.value, 10);
-            if (val > 0) {
-                settings.skipInterval = val;
-                skipAmountLabel.textContent = `${val}s`;
-                saveSettings();
+        playPauseBtn.addEventListener('click', () => {
+            if (app.activeSlotIndex === -1) return;
+            const slot = app.slots[app.activeSlotIndex];
+            if (slot.type === 'audio') {
+                if (slot.audioPlayer.paused) slot.audioPlayer.play(); else slot.audioPlayer.pause();
+            } else if (slot.type === 'youtube') {
+                const state = slot.ytPlayer.getPlayerState();
+                if (state === YT.PlayerState.PLAYING) slot.ytPlayer.pauseVideo(); else slot.ytPlayer.playVideo();
             }
         });
+
+        playButtons.forEach((btn, index) => btn.addEventListener('click', () => playSlot(index)));
+        
+        app.handleError = function(event, playerIndex) {
+            /* La funzione globale onPlayerError gestisce già tutto */
+        };
+        
+        app.handleStateChange = function(event, index) {
+            const slot = app.slots[index];
+            if (!slot) return;
+            
+            if (slot.type === 'youtube' && event.data === YT.PlayerState.CUED) {
+                if (slot.titlePollInterval) clearInterval(slot.titlePollInterval);
+                let attempts = 0;
+                slot.titlePollInterval = setInterval(() => {
+                    if (app.slots[index].type !== 'youtube') { clearInterval(slot.titlePollInterval); return; }
+                    const videoData = slot.ytPlayer.getVideoData();
+                    if (videoData && videoData.title) {
+                        app.filenameDisplays[index].textContent = videoData.title;
+                        clearInterval(slot.titlePollInterval);
+                        slot.titlePollInterval = null;
+                    } else {
+                        attempts++;
+                        if (attempts > 15) { clearInterval(slot.titlePollInterval); slot.titlePollInterval = null; }
+                    }
+                }, 200);
+            }
+
+            if (index === app.activeSlotIndex) {
+                const s = event.data;
+                if (s === YT.PlayerState.PLAYING) startUpdatingUI();
+                if (s === YT.PlayerState.PAUSED || s === YT.PlayerState.ENDED) stopUpdatingUI();
+                if (s === YT.PlayerState.ENDED && settings.autoSkipEnabled) startAutoSkipTimer(true);
+                updatePlayerUI();
+            }
+        };
+        
+        app.slots.forEach((slot, index) => {
+            slot.audioPlayer.addEventListener('play', () => { if(index === app.activeSlotIndex) startUpdatingUI(); });
+            slot.audioPlayer.addEventListener('pause', () => { if(index === app.activeSlotIndex) stopUpdatingUI(); });
+            slot.audioPlayer.addEventListener('ended', () => { if(index === app.activeSlotIndex && settings.autoSkipEnabled) startAutoSkipTimer(true); });
+            slot.audioPlayer.addEventListener('timeupdate', () => { if(index === app.activeSlotIndex) updatePlayerUI(); });
+        });
+
+        seekBar.addEventListener('input', (e) => { if (app.activeSlotIndex !== -1) { const s = app.slots[app.activeSlotIndex]; if (s.type === 'audio') s.audioPlayer.currentTime = e.target.value; if (s.type === 'youtube') s.ytPlayer.seekTo(e.target.value, true); }});
+        
+        // Funzioni e listeners ausiliari
+        const settingsElements = {autoSkipDurationInput, skipIntervalInput, autoSkipSwitch, autoSkipSwitchKnob, skipAmountLabel, settingsModal, closeSettingsBtn, settingsBtn};
+        function formatTime(s){const m=Math.floor(s/60);const c=Math.floor(s%60);return `${m.toString().padStart(2,'0')}:${c.toString().padStart(2,'0')}`}
+        function loadSettings(){const s=JSON.parse(localStorage.getItem('audioComparerSettings'));if(s){settings=s}settingsElements.autoSkipDurationInput.value=settings.autoSkipDuration;settingsElements.skipIntervalInput.value=settings.skipInterval;settingsElements.skipAmountLabel.textContent=`${settings.skipInterval}s`;updateAutoSkipSwitchUI(settings.autoSkipEnabled)}
+        function saveSettings(){localStorage.setItem('audioComparerSettings',JSON.stringify(settings))}
+        function updateAutoSkipSwitchUI(e){if(e){settingsElements.autoSkipSwitch.classList.remove('bg-gray-600');settingsElements.autoSkipSwitch.classList.add('bg-orange-500');settingsElements.autoSkipSwitchKnob.style.transform='translateX(1.25rem)'}else{settingsElements.autoSkipSwitch.classList.add('bg-gray-600');settingsElements.autoSkipSwitch.classList.remove('bg-orange-500');settingsElements.autoSkipSwitchKnob.style.transform='translateX(0.25rem)'}}
+        skipForwardBtn.addEventListener('click',()=>{if(app.activeSlotIndex!==-1){const s=app.slots[app.activeSlotIndex];if(s.type==='audio')s.audioPlayer.currentTime+=settings.skipInterval;if(s.type==='youtube')s.ytPlayer.seekTo(s.ytPlayer.getCurrentTime()+settings.skipInterval,true)}});
+        skipBackwardBtn.addEventListener('click',()=>{if(app.activeSlotIndex!==-1){const s=app.slots[app.activeSlotIndex];if(s.type==='audio')s.audioPlayer.currentTime-=settings.skipInterval;if(s.type==='youtube')s.ytPlayer.seekTo(s.ytPlayer.getCurrentTime()-settings.skipInterval,true)}});
+        settingsBtn.addEventListener('click',()=>settingsElements.settingsModal.classList.remove('hidden'));
+        clearBtn.addEventListener('click',clearAllFiles);
+        closeSettingsBtn.addEventListener('click',()=>settingsElements.settingsModal.classList.add('hidden'));
+        autoSkipSwitch.addEventListener('click',()=>{settings.autoSkipEnabled=!settings.autoSkipEnabled;updateAutoSkipSwitchUI(settings.autoSkipEnabled);saveSettings();const s=app.activeSlotIndex!==-1?app.slots[app.activeSlotIndex]:null;if(settings.autoSkipEnabled&&s){let i;if(s.type==='audio')i=!s.audioPlayer.paused;else{const t=s.ytPlayer.getPlayerState();i=t===1||t===3}if(i)startAutoSkipTimer()}else{if(autoSkipTimer)clearTimeout(autoSkipTimer)}});
+        autoSkipDurationInput.addEventListener('change',(e)=>{const t=parseInt(e.target.value,10);if(t>0){settings.autoSkipDuration=t;saveSettings()}});
+        skipIntervalInput.addEventListener('change',(e)=>{const t=parseInt(e.target.value,10);if(t>0){settings.skipInterval=t;skipAmountLabel.textContent=`${t}s`;saveSettings()}});
 
         loadSettings();
         updatePlayerUI();
