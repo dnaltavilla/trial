@@ -34,7 +34,7 @@
             </div>
             <div class="flex items-center gap-3">
                 <button id="clearBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" title="Pulisci tutto"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
-                <span class="text-xs text-gray-500">v. 3.2</span>
+                <span class="text-xs text-gray-500">v. 3.3</span>
                 <button id="settingsBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" title="Impostazioni"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg></button>
             </div>
         </div>
@@ -69,19 +69,21 @@
         </div>
     </div>
     <div id="youtube-players" class="absolute -left-full"><div id="yt-player-0"></div><div id="yt-player-1"></div><div id="yt-player-2"></div><div id="yt-player-3"></div></div>
+    <div id="youtubeModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-4 text-white">Incolla Link YouTube</h2><input type="url" id="youtubeLinkInput" class="w-full bg-gray-700 rounded-md p-3 text-white placeholder-gray-400" placeholder="https://www.youtube.com/watch?v=..."><div class="flex justify-end gap-4 mt-6"><button id="cancelYoutubeBtn" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors">Annulla</button><button id="confirmYoutubeBtn" class="bg-orange-600 hover:bg-orange-500 text-white font-bold py-2 px-6 rounded-lg transition-colors">Conferma</button></div></div></div>
     
-    <div id="youtubeModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50">
+    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50">
         <div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4">
-            <h2 class="text-2xl font-bold mb-4 text-white">Incolla Link YouTube</h2>
-            <input type="url" id="youtubeLinkInput" class="w-full bg-gray-700 rounded-md p-3 text-white placeholder-gray-400" placeholder="https://www.youtube.com/watch?v=...">
-            <div class="flex justify-end gap-4 mt-6">
-                <button id="cancelYoutubeBtn" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors">Annulla</button>
-                <button id="confirmYoutubeBtn" class="bg-orange-600 hover:bg-orange-500 text-white font-bold py-2 px-6 rounded-lg transition-colors">Conferma</button>
+            <h2 class="text-2xl font-bold mb-6 text-white">Impostazioni</h2>
+            <div class="space-y-6">
+                <div class="flex items-center justify-between"><label for="autoSkipSwitch" class="text-lg">Salto Automatico</label><button id="autoSkipSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="autoSkipSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div>
+                <div class="flex items-center justify-between"><label for="autoSkipDuration">Durata Auto-Skip (s)</label><input type="number" id="autoSkipDuration" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div>
+                <div class="flex items-center justify-between"><label for="skipInterval">Intervallo Salto (s)</label><input type="number" id="skipInterval" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div>
+                <div class="flex items-center justify-between"><label for="keepScreenOnSwitch" class="text-lg">Mantieni Schermo Attivo</label><button id="keepScreenOnSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="keepScreenOnSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div>
             </div>
+            <button id="closeSettingsBtn" class="mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity">Chiudi</button>
         </div>
     </div>
 
-    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-6 text-white">Impostazioni</h2><div class="space-y-6"><div class="flex items-center justify-between"><label for="autoSkipSwitch" class="text-lg">Salto Automatico</label><button id="autoSkipSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="autoSkipSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div><div class="flex items-center justify-between"><label for="autoSkipDuration">Durata Auto-Skip (s)</label><input type="number" id="autoSkipDuration" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div><div class="flex items-center justify-between"><label for="skipInterval">Intervallo Salto (s)</label><input type="number" id="skipInterval" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div></div><button id="closeSettingsBtn" class="mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity">Chiudi</button></div></div>
     <audio id="audio1"></audio><audio id="audio2"></audio><audio id="audio3"></audio><audio id="audio4"></audio>
 
     <script>
@@ -107,43 +109,56 @@
     document.addEventListener('DOMContentLoaded', () => {
         app.slots = Array.from({ length: 4 }, (_, i) => ({ type: null, audioPlayer: document.getElementById(`audio${i+1}`), ytPlayer: null, duration: 0, titlePollInterval: null }));
         app.filenameDisplays = Array.from({ length: 4 }, (_, i) => document.getElementById(`filename${i + 1}`));
+        app.playButtons = Array.from({ length: 4 }, (_, i) => document.getElementById(`playBtn${i + 1}`));
         app.activeSlotIndex = -1;
         app.targetSlotForLink = -1;
+        app.autoSkipTimer = null;
+        app.masterTimeUpdater = null;
+        app.settings = { autoSkipEnabled: false, autoSkipDuration: 5, skipInterval: 10, keepScreenOn: false };
+        app.wakeLockSentinel = null; // Per il blocco schermo
 
-        const fileInputs = Array.from({ length: 4 }, (_, i) => document.getElementById(`file${i + 1}`));
-        const playButtons = Array.from({ length: 4 }, (_, i) => document.getElementById(`playBtn${i + 1}`));
-        const youtubeBtns = document.querySelectorAll('.youtube-btn');
-        const seekBar = document.getElementById('seekBar');
-        const currentTimeEl = document.getElementById('currentTime');
-        const durationEl = document.getElementById('duration');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const playIcon = document.getElementById('playIcon');
-        const pauseIcon = document.getElementById('pauseIcon');
-        const skipForwardBtn = document.getElementById('skipForwardBtn');
-        const skipBackwardBtn = document.getElementById('skipBackwardBtn');
-        const skipAmountLabel = document.getElementById('skipAmountLabel');
-        const settingsBtn = document.getElementById('settingsBtn');
-        const clearBtn = document.getElementById('clearBtn');
-        
-        // Elementi del nuovo modal
-        const youtubeModal = document.getElementById('youtubeModal');
-        const youtubeLinkInput = document.getElementById('youtubeLinkInput');
-        const confirmYoutubeBtn = document.getElementById('confirmYoutubeBtn');
-        const cancelYoutubeBtn = document.getElementById('cancelYoutubeBtn');
-
-        let autoSkipTimer = null, masterTimeUpdater = null;
-        let settings = { autoSkipEnabled: false, autoSkipDuration: 5, skipInterval: 10 };
+        const ui = {
+            fileInputs: Array.from({ length: 4 }, (_, i) => document.getElementById(`file${i + 1}`)),
+            youtubeBtns: document.querySelectorAll('.youtube-btn'),
+            seekBar: document.getElementById('seekBar'),
+            currentTimeEl: document.getElementById('currentTime'),
+            durationEl: document.getElementById('duration'),
+            playPauseBtn: document.getElementById('playPauseBtn'),
+            playIcon: document.getElementById('playIcon'),
+            pauseIcon: document.getElementById('pauseIcon'),
+            skipForwardBtn: document.getElementById('skipForwardBtn'),
+            skipBackwardBtn: document.getElementById('skipBackwardBtn'),
+            skipAmountLabel: document.getElementById('skipAmountLabel'),
+            clearBtn: document.getElementById('clearBtn'),
+            settings: {
+                modal: document.getElementById('settingsModal'),
+                openBtn: document.getElementById('settingsBtn'),
+                closeBtn: document.getElementById('closeSettingsBtn'),
+                autoSkipSwitch: document.getElementById('autoSkipSwitch'),
+                autoSkipSwitchKnob: document.getElementById('autoSkipSwitchKnob'),
+                autoSkipDurationInput: document.getElementById('autoSkipDuration'),
+                skipIntervalInput: document.getElementById('skipInterval'),
+                keepScreenOnSwitch: document.getElementById('keepScreenOnSwitch'), // NUOVO
+                keepScreenOnSwitchKnob: document.getElementById('keepScreenOnSwitchKnob'), // NUOVO
+            },
+            youtube: {
+                modal: document.getElementById('youtubeModal'),
+                input: document.getElementById('youtubeLinkInput'),
+                confirmBtn: document.getElementById('confirmYoutubeBtn'),
+                cancelBtn: document.getElementById('cancelYoutubeBtn'),
+            }
+        };
 
         const checkYtApiReady = setInterval(() => {
             if (ytApiReady && ytPlayers.every(p => typeof p.loadVideoById === 'function')) {
                 app.slots.forEach((slot, i) => slot.ytPlayer = ytPlayers[i]);
-                youtubeBtns.forEach(btn => btn.classList.remove('disabled'));
+                ui.youtubeBtns.forEach(btn => btn.classList.remove('disabled'));
                 clearInterval(checkYtApiReady);
             }
         }, 100);
         
-        function startUpdatingUI() { if (!masterTimeUpdater) masterTimeUpdater = setInterval(updatePlayerUI, 250); }
-        function stopUpdatingUI() { clearInterval(masterTimeUpdater); masterTimeUpdater = null; }
+        const startUpdatingUI = () => { if (!app.masterTimeUpdater) app.masterTimeUpdater = setInterval(updatePlayerUI, 250); }
+        const stopUpdatingUI = () => { clearInterval(app.masterTimeUpdater); app.masterTimeUpdater = null; }
 
         function stopAll(exceptIndex = -1) {
             stopUpdatingUI();
@@ -153,8 +168,8 @@
                     if (slot.type === 'youtube' && slot.ytPlayer?.pauseVideo) slot.ytPlayer.pauseVideo();
                 }
             });
-            playButtons.forEach((btn, index) => { if (index !== exceptIndex) btn.classList.remove('playing'); });
-            if (autoSkipTimer) clearTimeout(autoSkipTimer);
+            app.playButtons.forEach((btn, index) => { if (index !== exceptIndex) btn.classList.remove('playing'); });
+            if (app.autoSkipTimer) clearTimeout(app.autoSkipTimer);
         }
 
         function playSlot(index) {
@@ -172,20 +187,20 @@
                 if (slot.type === 'audio') slot.audioPlayer.play();
                 else slot.ytPlayer.playVideo();
                 app.activeSlotIndex = index;
-                playButtons[index].classList.add('playing');
+                app.playButtons[index].classList.add('playing');
                 startUpdatingUI();
-                if (settings.autoSkipEnabled) startAutoSkipTimer();
+                if (app.settings.autoSkipEnabled) startAutoSkipTimer();
             }
         }
 
         function updatePlayerUI() {
             const isSlotActive = app.activeSlotIndex !== -1, slot = isSlotActive ? app.slots[app.activeSlotIndex] : null;
-            seekBar.disabled = !isSlotActive; skipForwardBtn.disabled = !isSlotActive; skipBackwardBtn.disabled = !isSlotActive; playPauseBtn.disabled = !isSlotActive;
+            ui.seekBar.disabled = !isSlotActive; ui.skipForwardBtn.disabled = !isSlotActive; ui.skipBackwardBtn.disabled = !isSlotActive; ui.playPauseBtn.disabled = !isSlotActive;
 
             if (!isSlotActive || !slot.type) {
-                playIcon.classList.add('hidden'); pauseIcon.classList.remove('hidden');
-                currentTimeEl.textContent = "00:00"; durationEl.textContent = "00:00";
-                seekBar.value = 0; stopUpdatingUI(); return;
+                ui.playIcon.classList.add('hidden'); ui.pauseIcon.classList.remove('hidden');
+                ui.currentTimeEl.textContent = "00:00"; ui.durationEl.textContent = "00:00";
+                ui.seekBar.value = 0; stopUpdatingUI(); return;
             }
             
             let isPlaying, currentTime = 0, duration = 0;
@@ -200,51 +215,45 @@
             }
             slot.duration = duration;
             
-            if (isPlaying) { playIcon.classList.add('hidden'); pauseIcon.classList.remove('hidden'); }
-            else { playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); stopUpdatingUI(); }
+            if (isPlaying) { ui.playIcon.classList.add('hidden'); ui.pauseIcon.classList.remove('hidden'); }
+            else { ui.playIcon.classList.remove('hidden'); ui.pauseIcon.classList.add('hidden'); stopUpdatingUI(); }
             
-            seekBar.max = duration; seekBar.value = currentTime;
-            currentTimeEl.textContent = formatTime(currentTime); durationEl.textContent = formatTime(duration);
+            ui.seekBar.max = duration; ui.seekBar.value = currentTime;
+            ui.currentTimeEl.textContent = formatTime(currentTime); ui.durationEl.textContent = formatTime(duration);
         }
 
-        fileInputs.forEach((input, startIndex) => {
+        ui.fileInputs.forEach((input, startIndex) => {
             input.addEventListener('change', (e) => {
                 Array.from(e.target.files).forEach((file, fileIndex) => { if (startIndex + fileIndex < 4) loadAudioFile(file, startIndex + fileIndex); });
                 input.value = null;
             });
         });
 
-        // LOGICA NUOVO MODAL
-        youtubeBtns.forEach(btn => {
+        ui.youtubeBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 if(btn.classList.contains('disabled')) return;
                 app.targetSlotForLink = parseInt(btn.dataset.index);
-                youtubeModal.classList.remove('hidden');
-                youtubeLinkInput.focus();
+                ui.youtube.modal.classList.remove('hidden');
+                ui.youtube.input.focus();
             });
         });
-
-        confirmYoutubeBtn.addEventListener('click', () => {
-            const url = youtubeLinkInput.value;
-            if (url && app.targetSlotForLink !== -1) {
-                loadYoutubeLink(url, app.targetSlotForLink);
-            }
-            youtubeLinkInput.value = '';
-            youtubeModal.classList.add('hidden');
+        ui.youtube.confirmBtn.addEventListener('click', () => {
+            const url = ui.youtube.input.value;
+            if (url && app.targetSlotForLink !== -1) loadYoutubeLink(url, app.targetSlotForLink);
+            ui.youtube.input.value = '';
+            ui.youtube.modal.classList.add('hidden');
             app.targetSlotForLink = -1;
         });
-
-        cancelYoutubeBtn.addEventListener('click', () => {
-            youtubeLinkInput.value = '';
-            youtubeModal.classList.add('hidden');
+        ui.youtube.cancelBtn.addEventListener('click', () => {
+            ui.youtube.input.value = '';
+            ui.youtube.modal.classList.add('hidden');
             app.targetSlotForLink = -1;
         });
-
 
         function loadAudioFile(file, index) {
             clearSlot(index);
             app.slots[index].type = 'audio'; app.slots[index].audioPlayer.src = URL.createObjectURL(file);
-            app.filenameDisplays[index].textContent = file.name; playButtons[index].disabled = false;
+            app.filenameDisplays[index].textContent = file.name; app.playButtons[index].disabled = false;
         }
 
         function loadYoutubeLink(url, index) {
@@ -253,7 +262,7 @@
             clearSlot(index);
             app.slots[index].type = 'youtube';
             app.slots[index].ytPlayer.cueVideoById(videoId);
-            playButtons[index].disabled = false;
+            app.playButtons[index].disabled = false;
         }
         
         function parseYoutubeId(url) {
@@ -274,11 +283,11 @@
 
         function clearAllFiles() {
             stopAll();
-            for (let i=0; i<4; i++) { clearSlot(i); playButtons[i].disabled = true; }
+            for (let i=0; i<4; i++) { clearSlot(i); app.playButtons[i].disabled = true; }
             app.activeSlotIndex = -1; updatePlayerUI();
         }
 
-        playPauseBtn.addEventListener('click', () => {
+        ui.playPauseBtn.addEventListener('click', () => {
             if (app.activeSlotIndex === -1) return;
             const slot = app.slots[app.activeSlotIndex];
             if (slot.type === 'audio') {
@@ -289,11 +298,9 @@
             }
         });
 
-        playButtons.forEach((btn, index) => btn.addEventListener('click', () => playSlot(index)));
+        app.playButtons.forEach((btn, index) => btn.addEventListener('click', () => playSlot(index)));
         
-        app.handleError = function(event, playerIndex) {
-            /* La funzione globale onPlayerError gestisce già tutto */
-        };
+        app.handleError = function(event, playerIndex) { /* Gestita dalla funzione globale onPlayerError */ };
         
         app.handleStateChange = function(event, index) {
             const slot = app.slots[index];
@@ -320,7 +327,7 @@
                 const s = event.data;
                 if (s === YT.PlayerState.PLAYING) startUpdatingUI();
                 if (s === YT.PlayerState.PAUSED || s === YT.PlayerState.ENDED) stopUpdatingUI();
-                if (s === YT.PlayerState.ENDED && settings.autoSkipEnabled) startAutoSkipTimer(true);
+                if (s === YT.PlayerState.ENDED && app.settings.autoSkipEnabled) startAutoSkipTimer();
                 updatePlayerUI();
             }
         };
@@ -328,26 +335,75 @@
         app.slots.forEach((slot, index) => {
             slot.audioPlayer.addEventListener('play', () => { if(index === app.activeSlotIndex) startUpdatingUI(); });
             slot.audioPlayer.addEventListener('pause', () => { if(index === app.activeSlotIndex) stopUpdatingUI(); });
-            slot.audioPlayer.addEventListener('ended', () => { if(index === app.activeSlotIndex && settings.autoSkipEnabled) startAutoSkipTimer(true); });
+            slot.audioPlayer.addEventListener('ended', () => { if(index === app.activeSlotIndex && app.settings.autoSkipEnabled) startAutoSkipTimer(); });
             slot.audioPlayer.addEventListener('timeupdate', () => { if(index === app.activeSlotIndex) updatePlayerUI(); });
         });
 
-        seekBar.addEventListener('input', (e) => { if (app.activeSlotIndex !== -1) { const s = app.slots[app.activeSlotIndex]; if (s.type === 'audio') s.audioPlayer.currentTime = e.target.value; if (s.type === 'youtube') s.ytPlayer.seekTo(e.target.value, true); }});
+        ui.seekBar.addEventListener('input', (e) => { if (app.activeSlotIndex !== -1) { const s = app.slots[app.activeSlotIndex]; if (s.type === 'audio') s.audioPlayer.currentTime = e.target.value; if (s.type === 'youtube') s.ytPlayer.seekTo(e.target.value, true); }});
         
-        // Funzioni e listeners ausiliari
-        const settingsElements = {autoSkipDurationInput, skipIntervalInput, autoSkipSwitch, autoSkipSwitchKnob, skipAmountLabel, settingsModal, closeSettingsBtn, settingsBtn};
-        function formatTime(s){const m=Math.floor(s/60);const c=Math.floor(s%60);return `${m.toString().padStart(2,'0')}:${c.toString().padStart(2,'0')}`}
-        function loadSettings(){const s=JSON.parse(localStorage.getItem('audioComparerSettings'));if(s){settings=s}settingsElements.autoSkipDurationInput.value=settings.autoSkipDuration;settingsElements.skipIntervalInput.value=settings.skipInterval;settingsElements.skipAmountLabel.textContent=`${settings.skipInterval}s`;updateAutoSkipSwitchUI(settings.autoSkipEnabled)}
-        function saveSettings(){localStorage.setItem('audioComparerSettings',JSON.stringify(settings))}
-        function updateAutoSkipSwitchUI(e){if(e){settingsElements.autoSkipSwitch.classList.remove('bg-gray-600');settingsElements.autoSkipSwitch.classList.add('bg-orange-500');settingsElements.autoSkipSwitchKnob.style.transform='translateX(1.25rem)'}else{settingsElements.autoSkipSwitch.classList.add('bg-gray-600');settingsElements.autoSkipSwitch.classList.remove('bg-orange-500');settingsElements.autoSkipSwitchKnob.style.transform='translateX(0.25rem)'}}
-        skipForwardBtn.addEventListener('click',()=>{if(app.activeSlotIndex!==-1){const s=app.slots[app.activeSlotIndex];if(s.type==='audio')s.audioPlayer.currentTime+=settings.skipInterval;if(s.type==='youtube')s.ytPlayer.seekTo(s.ytPlayer.getCurrentTime()+settings.skipInterval,true)}});
-        skipBackwardBtn.addEventListener('click',()=>{if(app.activeSlotIndex!==-1){const s=app.slots[app.activeSlotIndex];if(s.type==='audio')s.audioPlayer.currentTime-=settings.skipInterval;if(s.type==='youtube')s.ytPlayer.seekTo(s.ytPlayer.getCurrentTime()-settings.skipInterval,true)}});
-        settingsBtn.addEventListener('click',()=>settingsElements.settingsModal.classList.remove('hidden'));
-        clearBtn.addEventListener('click',clearAllFiles);
-        closeSettingsBtn.addEventListener('click',()=>settingsElements.settingsModal.classList.add('hidden'));
-        autoSkipSwitch.addEventListener('click',()=>{settings.autoSkipEnabled=!settings.autoSkipEnabled;updateAutoSkipSwitchUI(settings.autoSkipEnabled);saveSettings();const s=app.activeSlotIndex!==-1?app.slots[app.activeSlotIndex]:null;if(settings.autoSkipEnabled&&s){let i;if(s.type==='audio')i=!s.audioPlayer.paused;else{const t=s.ytPlayer.getPlayerState();i=t===1||t===3}if(i)startAutoSkipTimer()}else{if(autoSkipTimer)clearTimeout(autoSkipTimer)}});
-        autoSkipDurationInput.addEventListener('change',(e)=>{const t=parseInt(e.target.value,10);if(t>0){settings.autoSkipDuration=t;saveSettings()}});
-        skipIntervalInput.addEventListener('change',(e)=>{const t=parseInt(e.target.value,10);if(t>0){settings.skipInterval=t;skipAmountLabel.textContent=`${t}s`;saveSettings()}});
+        const formatTime = (s) => { const m=Math.floor(s/60); const c=Math.floor(s%60); return `${m.toString().padStart(2,'0')}:${c.toString().padStart(2,'0')}`; };
+        
+        function startAutoSkipTimer() {
+            if (app.autoSkipTimer) clearTimeout(app.autoSkipTimer);
+            app.autoSkipTimer = setTimeout(() => {
+                let nextIndex = app.activeSlotIndex >= 0 ? app.activeSlotIndex + 1 : 0;
+                for (let i = 0; i < app.slots.length; i++) {
+                    if (nextIndex >= app.slots.length) nextIndex = 0;
+                    if (app.slots[nextIndex].type) { playSlot(nextIndex); return; }
+                    nextIndex++;
+                }
+            }, app.settings.autoSkipDuration * 1000);
+        }
+
+        // --- GESTIONE IMPOSTAZIONI ---
+        const saveSettings = () => { localStorage.setItem('audioComparerSettings',JSON.stringify(app.settings)); };
+        const updateAutoSkipSwitchUI = (e) => { if(e){ui.settings.autoSkipSwitch.classList.remove('bg-gray-600');ui.settings.autoSkipSwitch.classList.add('bg-orange-500');ui.settings.autoSkipSwitchKnob.style.transform='translateX(1.25rem)'}else{ui.settings.autoSkipSwitch.classList.add('bg-gray-600');ui.settings.autoSkipSwitch.classList.remove('bg-orange-500');ui.settings.autoSkipSwitchKnob.style.transform='translateX(0.25rem)'}};
+        const updateKeepScreenOnSwitchUI = (e) => { if(e){ui.settings.keepScreenOnSwitch.classList.remove('bg-gray-600');ui.settings.keepScreenOnSwitch.classList.add('bg-orange-500');ui.settings.keepScreenOnSwitchKnob.style.transform='translateX(1.25rem)'}else{ui.settings.keepScreenOnSwitch.classList.add('bg-gray-600');ui.settings.keepScreenOnSwitch.classList.remove('bg-orange-500');ui.settings.keepScreenOnSwitchKnob.style.transform='translateX(0.25rem)'}};
+
+        const handleWakeLock = async () => {
+            if ('wakeLock' in navigator) {
+                if (app.settings.keepScreenOn) {
+                    try {
+                        app.wakeLockSentinel = await navigator.wakeLock.request('screen');
+                        app.wakeLockSentinel.addEventListener('release', () => { console.log('Wake Lock rilasciato dal sistema.'); });
+                        console.log('Wake Lock attivato.');
+                    } catch (err) { console.error(`${err.name}, ${err.message}`); }
+                } else {
+                    if (app.wakeLockSentinel) {
+                        app.wakeLockSentinel.release().then(() => { app.wakeLockSentinel = null; console.log('Wake Lock rilasciato.'); });
+                    }
+                }
+            } else { console.warn("API Wake Lock non supportata su questo browser."); }
+        };
+
+        const loadSettings = () => {
+            const s=JSON.parse(localStorage.getItem('audioComparerSettings'));
+            if(s){ Object.assign(app.settings, s); }
+            ui.settings.autoSkipDurationInput.value=app.settings.autoSkipDuration;
+            ui.settings.skipIntervalInput.value=app.settings.skipInterval;
+            ui.skipAmountLabel.textContent=`${app.settings.skipInterval}s`;
+            updateAutoSkipSwitchUI(app.settings.autoSkipEnabled);
+            updateKeepScreenOnSwitchUI(app.settings.keepScreenOn);
+            handleWakeLock(); // Applica lo stato del wake lock all'avvio
+        };
+
+        ui.skipForwardBtn.addEventListener('click',()=>{if(app.activeSlotIndex!==-1){const s=app.slots[app.activeSlotIndex];if(s.type==='audio')s.audioPlayer.currentTime+=app.settings.skipInterval;if(s.type==='youtube')s.ytPlayer.seekTo(s.ytPlayer.getCurrentTime()+app.settings.skipInterval,true)}});
+        ui.skipBackwardBtn.addEventListener('click',()=>{if(app.activeSlotIndex!==-1){const s=app.slots[app.activeSlotIndex];if(s.type==='audio')s.audioPlayer.currentTime-=app.settings.skipInterval;if(s.type==='youtube')s.ytPlayer.seekTo(s.ytPlayer.getCurrentTime()-app.settings.skipInterval,true)}});
+        
+        ui.settings.openBtn.addEventListener('click',()=>ui.settings.modal.classList.remove('hidden'));
+        ui.settings.closeBtn.addEventListener('click',()=>ui.settings.modal.classList.add('hidden'));
+        ui.clearBtn.addEventListener('click', clearAllFiles);
+
+        ui.settings.autoSkipSwitch.addEventListener('click',()=>{app.settings.autoSkipEnabled=!app.settings.autoSkipEnabled;updateAutoSkipSwitchUI(app.settings.autoSkipEnabled);saveSettings();const s=app.activeSlotIndex!==-1?app.slots[app.activeSlotIndex]:null;if(app.settings.autoSkipEnabled&&s){let i;if(s.type==='audio')i=!s.audioPlayer.paused;else{const t=s.ytPlayer.getPlayerState();i=t===1||t===3}if(i)startAutoSkipTimer()}else{if(app.autoSkipTimer)clearTimeout(app.autoSkipTimer)}});
+        ui.settings.autoSkipDurationInput.addEventListener('change',(e)=>{const t=parseInt(e.target.value,10);if(t>0){app.settings.autoSkipDuration=t;saveSettings()}});
+        ui.settings.skipIntervalInput.addEventListener('change',(e)=>{const t=parseInt(e.target.value,10);if(t>0){app.settings.skipInterval=t;ui.skipAmountLabel.textContent=`${t}s`;saveSettings()}});
+        ui.settings.keepScreenOnSwitch.addEventListener('click', () => { app.settings.keepScreenOn = !app.settings.keepScreenOn; updateKeepScreenOnSwitchUI(app.settings.keepScreenOn); saveSettings(); handleWakeLock(); });
+        
+        document.addEventListener('visibilitychange', () => {
+            if (app.wakeLockSentinel && document.visibilityState === 'visible') {
+                handleWakeLock();
+            }
+        });
 
         loadSettings();
         updatePlayerUI();
