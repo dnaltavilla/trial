@@ -17,151 +17,78 @@
         .split-button-part:hover { background-color: rgba(255, 255, 255, 0.2); }
         .split-button-part:first-child { border-right: 1px solid rgba(255, 255, 255, 0.3); }
         .youtube-btn.disabled { cursor: not-allowed; background-color: rgba(0,0,0,0.4); filter: grayscale(80%); pointer-events: none; }
-        .playing-number, .playing-gain { background-color: #10B981 !important; color: white !important; box-shadow: 0 0 20px #10B981, inset 0 0 5px rgba(255,255,255,0.3); transform: scale(1.02); }
+        
+        /* --- MODIFICA #2: Rimossa la proprietà box-shadow --- */
+        .playing-number, .playing-gain { background-color: #10B981; color: white !important; transform: scale(1.02); }
+
         input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; background: #4B5563; border-radius: 3px; outline: none; transition: opacity .2s; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: #F97316; cursor: pointer; border-radius: 50%; border: 2px solid white; }
         .main-container { height: 100vh; display: flex; flex-direction: column; }
         .panel { background-color: #1F2937; border: 1px solid #374151; }
-        .gain-slider-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 10px; border-radius: 0.75rem; background-color: #374151; cursor: ns-resize; transition: all 0.2s ease; user-select: none; }
-        .gain-track { position: relative; width: 8px; height: 70%; background-color: #111827; border-radius: 4px; }
-        .gain-center-line { position: absolute; top: 50%; left: -4px; right: -4px; height: 2px; background-color: #6B7280; transform: translateY(-1px); }
-        .gain-fill-boost, .gain-fill-cut { position: absolute; width: 100%; background: linear-gradient(to top, #8B5CF6, #F97316); border-radius: 4px; }
-        .gain-fill-boost { top: 50%; height: 0; transform: translateY(-100%); }
-        .gain-fill-cut { bottom: 50%; height: 0; }
-        .gain-thumb { position: absolute; width: 28px; height: 14px; background-color: white; border-radius: 3px; left: 50%; transform: translateX(-50%); pointer-events: none; }
-        .gain-db-display { position: absolute; top: 8px; font-family: 'Inter', sans-serif; color: #D1D5DB; font-size: 0.9rem; font-weight: 700; }
-        .reset-gain-btn { position: absolute; bottom: 8px; color: #9CA3AF; background: #1F2937; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; border: 1px solid #4B5563; cursor: pointer; z-index: 10; }
-        .reset-gain-btn:hover { background-color: #374151; color: white; }
+        .gain-slider-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 10px; border-radius: 0.75rem; background-color: #374151; cursor: ns-resize; transition: background-color 0.1s ease, transform 0.2s ease; user-select: none; }
+        .gain-track { position: relative; width: 100%; height: 80%; }
+        .gain-thumb { position: absolute; width: 85%; height: 4px; background-color: white; border-radius: 2px; left: 50%; transform: translateX(-50%); pointer-events: none; box-shadow: 0 0 8px rgba(255,255,255,0.5); z-index: 5; }
+        .gain-db-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Inter', sans-serif; color: rgba(255, 255, 255, 0.9); font-size: 2rem; line-height: 2.25rem; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.7); pointer-events: none; z-index: 10; }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200 flex items-center justify-center">
-
     <div class="main-container w-full h-full p-2 sm:p-4">
         <div class="flex-shrink-0 flex justify-between items-center pb-2 px-2">
-            <div><h1 class="text-xl sm:text-2xl font-bold tracking-wider text-white">FireSTUDIO <span class="font-light text-orange-400">myREFERENCE</span></h1><p class="text-xs text-gray-500">by Marco Masdea - Fire Music - Palmi (RC)</p></div>
+            <div><h1 class="text-xl sm:text-2xl font-bold tracking-wider text-white">FireSTUDIO <span class="font-light text-orange-400">myREFERENCE</span></h1><p class="text-xs text-gray-500">by Marco Masdea - Fire Music - Palmi (RC) <button id="creditsBtn" class="ml-2 p-1 rounded-full text-gray-500 hover:text-white hover:bg-gray-700 transition-colors inline-block align-middle" title="Crediti"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg></button></p></div>
             <div class="flex items-center gap-3">
-                <button id="clearBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" title="Pulisci tutto"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
+                <button id="clearOrResetBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" title="Pulisci tutto"></button>
                 <button id="toggleGainViewBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" title="Mostra/Nascondi Controlli Gain"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" /></svg></button>
-                <span class="text-xs text-gray-500">v. 3.8</span>
+                <span class="text-xs text-gray-500">v. 5.7</span>
                 <button id="settingsBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" title="Impostazioni"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg></button>
             </div>
         </div>
-        
         <div class="flex-grow flex flex-col sm:flex-row gap-4 min-h-0">
-            <div class="panel rounded-2xl shadow-xl p-4 flex flex-col gap-4 w-full sm:w-1/3">
-                <div class="grid grid-cols-2 gap-3">
-                    <input type="file" id="file1" class="file-input" accept="audio/*" multiple><input type="file" id="file2" class="file-input" accept="audio/*" multiple><input type="file" id="file3" class="file-input" accept="audio/*" multiple><input type="file" id="file4" class="file-input" accept="audio/*" multiple>
-                    <div><div class="split-button-container"><label for="file1" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="0" title="Incolla link YouTube">▶</div></div><p id="filename1" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div>
-                    <div><div class="split-button-container"><label for="file2" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="1" title="Incolla link YouTube">▶</div></div><p id="filename2" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div>
-                    <div><div class="split-button-container"><label for="file3" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="2" title="Incolla link YouTube">▶</div></div><p id="filename3" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div>
-                    <div><div class="split-button-container"><label for="file4" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="3" title="Incolla link YouTube">▶</div></div><p id="filename4" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div>
-                </div>
-                <div class="bg-gray-900/50 rounded-lg p-3 space-y-3 mt-auto">
-                    <div class="flex items-center space-x-2"><span id="currentTime" class="text-sm font-mono text-gray-400">00:00</span><input type="range" id="seekBar" value="0" class="w-full" disabled><span id="duration" class="text-sm font-mono text-gray-400">00:00</span></div>
-                    <div class="flex justify-center items-center space-x-3">
-                         <button id="skipBackwardBtn" class="p-2 rounded-full hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:hover:bg-transparent" disabled><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" /></svg></button>
-                         <span id="skipAmountLabel" class="font-mono text-lg font-bold text-orange-400"></span>
-                         <button id="playPauseBtn" class="p-2 rounded-full text-white hover:bg-orange-500 transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:text-gray-600" disabled title="Pausa / Riprendi">
-                            <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 hidden" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
-                            <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
-                         </button>
-                         <button id="skipForwardBtn" class="p-2 rounded-full hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:hover:bg-transparent" disabled><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></button>
-                    </div>
-                </div>
-            </div>
-            <div class="panel rounded-2xl shadow-xl p-4 w-full sm:w-2/3 flex-grow">
-                <div class="grid grid-cols-2 gap-3 h-full">
-                    <div class="slot-ui-container" data-index="0"><button class="play-btn-number bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50 w-full h-full">1</button><div class="gain-slider-container hidden"><div class="gain-db-display"></div><div class="gain-track"><div class="gain-center-line"></div><div class="gain-fill-cut"></div><div class="gain-fill-boost"></div><div class="gain-thumb"></div></div><button class="reset-gain-btn">R</button></div></div>
-                    <div class="slot-ui-container" data-index="1"><button class="play-btn-number bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50 w-full h-full">2</button><div class="gain-slider-container hidden"><div class="gain-db-display"></div><div class="gain-track"><div class="gain-center-line"></div><div class="gain-fill-cut"></div><div class="gain-fill-boost"></div><div class="gain-thumb"></div></div><button class="reset-gain-btn">R</button></div></div>
-                    <div class="slot-ui-container" data-index="2"><button class="play-btn-number bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50 w-full h-full">3</button><div class="gain-slider-container hidden"><div class="gain-db-display"></div><div class="gain-track"><div class="gain-center-line"></div><div class="gain-fill-cut"></div><div class="gain-fill-boost"></div><div class="gain-thumb"></div></div><button class="reset-gain-btn">R</button></div></div>
-                    <div class="slot-ui-container" data-index="3"><button class="play-btn-number bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50 w-full h-full">4</button><div class="gain-slider-container hidden"><div class="gain-db-display"></div><div class="gain-track"><div class="gain-center-line"></div><div class="gain-fill-cut"></div><div class="gain-fill-boost"></div><div class="gain-thumb"></div></div><button class="reset-gain-btn">R</button></div></div>
-                </div>
-            </div>
+            <div class="panel rounded-2xl shadow-xl p-4 flex flex-col gap-4 w-full sm:w-1/3"><div class="grid grid-cols-2 gap-3"><input type="file" id="file1" class="file-input" accept="audio/*" multiple><input type="file" id="file2" class="file-input" accept="audio/*" multiple><input type="file" id="file3" class="file-input" accept="audio/*" multiple><input type="file" id="file4" class="file-input" accept="audio/*" multiple><div><div class="split-button-container"><label for="file1" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="0" title="Incolla link YouTube">▶</div></div><p id="filename1" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div><div><div class="split-button-container"><label for="file2" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="1" title="Incolla link YouTube">▶</div></div><p id="filename2" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div><div><div class="split-button-container"><label for="file3" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="2" title="Incolla link YouTube">▶</div></div><p id="filename3" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div><div><div class="split-button-container"><label for="file4" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="3" title="Incolla link YouTube">▶</div></div><p id="filename4" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div></div><div class="bg-gray-900/50 rounded-lg p-3 space-y-3 mt-auto"><div class="flex items-center space-x-2"><span id="currentTime" class="text-sm font-mono text-gray-400">00:00</span><input type="range" id="seekBar" value="0" class="w-full" disabled><span id="duration" class="text-sm font-mono text-gray-400">00:00</span></div><div class="flex justify-center items-center space-x-3"><button id="skipBackwardBtn" class="p-2 rounded-full hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:hover:bg-transparent" disabled><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" /></svg></button><span id="skipAmountLabel" class="font-mono text-lg font-bold text-orange-400"></span><button id="playPauseBtn" class="p-2 rounded-full text-white hover:bg-orange-500 transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:text-gray-600" disabled title="Pausa / Riprendi"><svg id="playIcon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 hidden" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg><svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg></button><button id="skipForwardBtn" class="p-2 rounded-full hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:hover:bg-transparent" disabled><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></button></div></div></div>
+            <div class="panel rounded-2xl shadow-xl p-4 w-full sm:w-2/3 flex-grow"><div class="grid grid-cols-2 gap-3 h-full"><div class="slot-ui-container" data-index="0"><button class="play-btn-number bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50 w-full h-full">1</button><div class="gain-slider-container hidden"><div class="gain-db-display"></div><div class="gain-track"></div><div class="gain-thumb"></div></div></div><div class="slot-ui-container" data-index="1"><button class="play-btn-number bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50 w-full h-full">2</button><div class="gain-slider-container hidden"><div class="gain-db-display"></div><div class="gain-track"></div><div class="gain-thumb"></div></div></div><div class="slot-ui-container" data-index="2"><button class="play-btn-number bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50 w-full h-full">3</button><div class="gain-slider-container hidden"><div class="gain-db-display"></div><div class="gain-track"></div><div class="gain-thumb"></div></div></div><div class="slot-ui-container" data-index="3"><button class="play-btn-number bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50 w-full h-full">4</button><div class="gain-slider-container hidden"><div class="gain-db-display"></div><div class="gain-track"></div><div class="gain-thumb"></div></div></div></div></div>
         </div>
     </div>
     <div id="youtube-players" class="absolute -left-full"><div id="yt-player-0"></div><div id="yt-player-1"></div><div id="yt-player-2"></div><div id="yt-player-3"></div></div>
     <div id="youtubeModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-4 text-white">Incolla Link YouTube</h2><input type="url" id="youtubeLinkInput" class="w-full bg-gray-700 rounded-md p-3 text-white placeholder-gray-400" placeholder="https://www.youtube.com/watch?v=..."><div class="flex justify-end gap-4 mt-6"><button id="cancelYoutubeBtn" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors">Annulla</button><button id="confirmYoutubeBtn" class="bg-orange-600 hover:bg-orange-500 text-white font-bold py-2 px-6 rounded-lg transition-colors">Conferma</button></div></div></div>
-    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-6 text-white">Impostazioni</h2><div class="space-y-6"><div class="flex items-center justify-between"><label for="autoSkipSwitch" class="text-lg">Salto Automatico</label><button id="autoSkipSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="autoSkipSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div><div class="flex items-center justify-between"><label for="autoSkipDuration">Durata Auto-Skip (s)</label><input type="number" id="autoSkipDuration" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div><div class="flex items-center justify-between"><label for="skipInterval">Intervallo Salto (s)</label><input type="number" id="skipInterval" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div><div class="flex items-center justify-between"><label for="keepScreenOnSwitch" class="text-lg">Mantieni Schermo Attivo</label><button id="keepScreenOnSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="keepScreenOnSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div><div class="flex items-center justify-between"><label for="normalizeAudioSwitch" class="text-lg">Normalizza Audio MP3</label><button id="normalizeAudioSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="normalizeAudioSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div></div><button id="closeSettingsBtn" class="mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity">Chiudi</button></div></div>
+    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-6 text-white">Impostazioni</h2><div class="space-y-4"><div class="flex items-center justify-between"><label for="autoSkipSwitch" class="text-lg">Salto Automatico</label><button id="autoSkipSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="autoSkipSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div><div class="flex items-center justify-between"><label for="autoSkipDuration">Durata Auto-Skip (s)</label><input type="number" id="autoSkipDuration" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div><div class="flex items-center justify-between"><label for="skipInterval">Intervallo Salto (s)</label><input type="number" id="skipInterval" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div><div class="flex items-center justify-between"><label for="keepScreenOnSwitch" class="text-lg">Mantieni Schermo Attivo</label><button id="keepScreenOnSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="keepScreenOnSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div><div class="pt-4 border-t border-gray-700"><button id="autoGainBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-lg transition-colors">Gain Automatico (solo Audio)</button></div></div><button id="closeSettingsBtn" class="mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity">Chiudi</button></div></div>
+    <div id="helpModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50 p-4"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4"><h3 id="helpTitle" class="text-xl font-bold mb-4 text-orange-400"></h3><p id="helpContent" class="text-gray-300"></p><button id="closeHelpBtn" class="mt-6 w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition-colors">OK</button></div></div>
+    <div id="creditsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50 p-4"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4 text-center"><h2 class="text-2xl font-bold mb-4 text-white">Crediti</h2><p class="text-gray-300">Applicazione ideata da<br><b class="text-orange-400">Marco Masdea</b><br>(Fire Music - Palmi RC)</p><p class="text-sm text-gray-500 mt-4">Progettazione a cura di Marco Masdea e Daniele Altavilla</p><button id="closeCreditsBtn" class="mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity">Chiudi</button></div></div>
     <audio id="audio1"></audio><audio id="audio2"></audio><audio id="audio3"></audio><audio id="audio4"></audio>
 
     <script>
     const app = {
         slots: [], activeSlotIndex: -1, targetSlotForLink: -1,
         autoSkipTimer: null, masterTimeUpdater: null,
-        settings: { autoSkipEnabled: false, autoSkipDuration: 5, skipInterval: 10, keepScreenOn: false, normalizeAudio: false },
+        settings: { autoSkipEnabled: false, autoSkipDuration: 5, skipInterval: 10, keepScreenOn: false },
         wakeLockSentinel: null,
-        audio: { context: null, sources: [], compressors: [], gains: [], isSetup: false },
-        uiState: { isGainView: false, isDraggingGain: false, dragStartIndex: -1 }
+        audio: { context: null, sources: [], analysers: [], gains: [], isSetup: false },
+        uiState: { isGainView: false, isDraggingGain: false, dragStartIndex: -1, dragStartY: 0 }
     };
     let ytPlayers = [];
     let ytApiReady = false;
-    
-    function onPlayerError(event, playerIndex) { /* ... */ }
+    const ICONS = { clear: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>`, reset: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M4 4l5 5M20 20l-5-5" /></svg>` };
+    function onPlayerError(event, playerIndex) { console.error(`Errore YouTube Player ${playerIndex+1}:`, event.data); }
     function onPlayerStateChange(event, playerIndex) { app.handleStateChange(event, playerIndex); }
     function onYouTubeIframeAPIReady() { ytApiReady = true; for (let i = 0; i < 4; i++) { ytPlayers[i] = new YT.Player(`yt-player-${i}`, { height: '0', width: '0', events: { 'onStateChange': (event) => onPlayerStateChange(event, i), 'onError': (event) => onPlayerError(event, i) } }); } }
 
     document.addEventListener('DOMContentLoaded', () => {
         const ui = {};
-        
         function initApp() {
             const query = (selector) => document.querySelector(selector);
             const queryAll = (selector) => document.querySelectorAll(selector);
-            Object.assign(ui, {
-                filenameDisplays: Array.from({ length: 4 }, (_, i) => query(`#filename${i + 1}`)),
-                playButtons: queryAll('.play-btn-number'),
-                gainContainers: queryAll('.gain-slider-container'),
-                fileInputs: Array.from({ length: 4 }, (_, i) => query(`#file${i + 1}`)),
-                youtubeBtns: queryAll('.youtube-btn'),
-                seekBar: query('#seekBar'), currentTimeEl: query('#currentTime'), durationEl: query('#duration'),
-                playPauseBtn: query('#playPauseBtn'), playIcon: query('#playIcon'), pauseIcon: query('#pauseIcon'),
-                skipForwardBtn: query('#skipForwardBtn'), skipBackwardBtn: query('#skipBackwardBtn'),
-                skipAmountLabel: query('#skipAmountLabel'), clearBtn: query('#clearBtn'),
-                toggleGainViewBtn: query('#toggleGainViewBtn'),
-                settings: { modal: query('#settingsModal'), openBtn: query('#settingsBtn'), closeBtn: query('#closeSettingsBtn'), autoSkipSwitch: query('#autoSkipSwitch'), autoSkipSwitchKnob: query('#autoSkipSwitchKnob'), autoSkipDurationInput: query('#autoSkipDuration'), skipIntervalInput: query('#skipInterval'), keepScreenOnSwitch: query('#keepScreenOnSwitch'), keepScreenOnSwitchKnob: query('#keepScreenOnSwitchKnob'), normalizeAudioSwitch: query('#normalizeAudioSwitch'), normalizeAudioSwitchKnob: query('#normalizeAudioSwitchKnob'), },
-                youtube: { modal: query('#youtubeModal'), input: query('#youtubeLinkInput'), confirmBtn: query('#confirmYoutubeBtn'), cancelBtn: query('#cancelYoutubeBtn'), }
-            });
-
+            Object.assign(ui, { filenameDisplays: Array.from({ length: 4 }, (_, i) => query(`#filename${i + 1}`)), playButtons: queryAll('.play-btn-number'), gainContainers: queryAll('.gain-slider-container'), slotUIContainers: queryAll('.slot-ui-container'), fileInputs: Array.from({ length: 4 }, (_, i) => query(`#file${i + 1}`)), youtubeBtns: queryAll('.youtube-btn'), seekBar: query('#seekBar'), currentTimeEl: query('#currentTime'), durationEl: query('#duration'), playPauseBtn: query('#playPauseBtn'), playIcon: query('#playIcon'), pauseIcon: query('#pauseIcon'), skipForwardBtn: query('#skipForwardBtn'), skipBackwardBtn: query('#skipBackwardBtn'), skipAmountLabel: query('#skipAmountLabel'), clearOrResetBtn: query('#clearOrResetBtn'), toggleGainViewBtn: query('#toggleGainViewBtn'), creditsBtn: query('#creditsBtn'), settings: { modal: query('#settingsModal'), openBtn: query('#settingsBtn'), closeBtn: query('#closeSettingsBtn'), autoSkipSwitch: query('#autoSkipSwitch'), autoSkipSwitchKnob: query('#autoSkipSwitchKnob'), autoSkipDurationInput: query('#autoSkipDuration'), skipIntervalInput: query('#skipInterval'), keepScreenOnSwitch: query('#keepScreenOnSwitch'), keepScreenOnSwitchKnob: query('#keepScreenOnSwitchKnob'), autoGainBtn: query('#autoGainBtn'), }, youtube: { modal: query('#youtubeModal'), input: query('#youtubeLinkInput'), confirmBtn: query('#confirmYoutubeBtn'), cancelBtn: query('#cancelYoutubeBtn'), }, help: { modal: query('#helpModal'), title: query('#helpTitle'), content: query('#helpContent'), closeBtn: query('#closeHelpBtn') }, credits: { modal: query('#creditsModal'), closeBtn: query('#closeCreditsBtn') } });
             app.slots = Array.from({ length: 4 }, (_, i) => ({ type: null, audioPlayer: document.getElementById(`audio${i+1}`), ytPlayer: null, duration: 0, titlePollInterval: null, gain: 1.0 }));
-            
             attachEventListeners();
             loadSettings();
+            app.slots.forEach((s, i) => updateGainSliderUI(i));
             updatePlayerUI();
-            
-            const checkYtApiReady = setInterval(() => {
-                if (ytApiReady && ytPlayers.every(p => typeof p.loadVideoById === 'function')) {
-                    app.slots.forEach((slot, i) => slot.ytPlayer = ytPlayers[i]);
-                    ui.youtubeBtns.forEach(btn => btn.classList.remove('disabled'));
-                    clearInterval(checkYtApiReady);
-                }
-            }, 100);
+            updateClearOrResetButton();
+            const checkYtApiReady = setInterval(() => { if (ytApiReady && ytPlayers.every(p => typeof p.loadVideoById === 'function')) { app.slots.forEach((slot, i) => slot.ytPlayer = ytPlayers[i]); ui.youtubeBtns.forEach(btn => btn.classList.remove('disabled')); clearInterval(checkYtApiReady); } }, 100);
         }
-
+        function setupAudioProcessing() { if (app.audio.isSetup) return; try { app.audio.context = new (window.AudioContext || window.webkitAudioContext)(); app.slots.forEach((slot, index) => { app.audio.sources[index] = app.audio.context.createMediaElementSource(slot.audioPlayer); app.audio.analysers[index] = app.audio.context.createAnalyser(); app.audio.gains[index] = app.audio.context.createGain(); app.audio.analysers[index].fftSize = 2048; app.audio.sources[index].connect(app.audio.analysers[index]).connect(app.audio.gains[index]).connect(app.audio.context.destination); }); app.audio.isSetup = true; } catch (e) { console.error("Errore Web Audio API:", e); ui.settings.autoGainBtn.style.display = 'none'; } }
         const startUpdatingUI = () => { if (!app.masterTimeUpdater) app.masterTimeUpdater = setInterval(updatePlayerUI, 250); };
         const stopUpdatingUI = () => { clearInterval(app.masterTimeUpdater); app.masterTimeUpdater = null; };
 
-        function setupAudioProcessing() {
-            if (app.audio.isSetup) return;
-            try {
-                app.audio.context = new (window.AudioContext || window.webkitAudioContext)();
-                app.slots.forEach((slot, index) => {
-                    app.audio.sources[index] = app.audio.context.createMediaElementSource(slot.audioPlayer);
-                    app.audio.gains[index] = app.audio.context.createGain();
-                    app.audio.compressors[index] = app.audio.context.createDynamicsCompressor();
-                    const compressor = app.audio.compressors[index];
-                    compressor.threshold.setValueAtTime(-40, app.audio.context.currentTime);
-                    compressor.knee.setValueAtTime(30, app.audio.context.currentTime);
-                    compressor.ratio.setValueAtTime(4, app.audio.context.currentTime);
-                    compressor.attack.setValueAtTime(0.01, app.audio.context.currentTime);
-                    compressor.release.setValueAtTime(0.25, app.audio.context.currentTime);
-                    app.audio.sources[index].connect(app.audio.gains[index]).connect(app.audio.context.destination);
-                });
-                app.audio.isSetup = true;
-            } catch (e) {
-                console.error("Errore Web Audio API:", e);
-                ui.settings.normalizeAudioSwitch.parentElement.style.display = 'none';
-            }
-        }
-        
+        // --- MODIFICA #1: Aggiunto reset del colore di sfondo in stopAll ---
         function stopAll(exceptIndex = -1) {
             stopUpdatingUI();
             app.slots.forEach((slot, index) => {
@@ -170,8 +97,13 @@
                     if (slot.type === 'youtube' && slot.ytPlayer?.pauseVideo) slot.ytPlayer.pauseVideo();
                 }
             });
-            document.querySelectorAll('.play-btn-number, .gain-slider-container').forEach((el, i) => {
-                if (i !== exceptIndex) el.classList.remove('playing-number', 'playing-gain');
+            ui.slotUIContainers.forEach((el, i) => {
+                if (i !== exceptIndex) {
+                    el.querySelector('.play-btn-number').classList.remove('playing-number');
+                    el.querySelector('.gain-slider-container').classList.remove('playing-gain');
+                    // Resetta il colore del bottone quando non è più attivo
+                    ui.playButtons[i].style.backgroundColor = '';
+                }
             });
             if (app.autoSkipTimer) clearTimeout(app.autoSkipTimer);
         }
@@ -181,138 +113,112 @@
             if (app.slots[index].type === 'audio' && !app.audio.isSetup) setupAudioProcessing();
             const slot = app.slots[index];
             let isPlaying;
-            if (slot.type === 'audio') isPlaying = !slot.audioPlayer.paused;
-            else { const s = slot.ytPlayer.getPlayerState(); isPlaying = s === YT.PlayerState.PLAYING || s === YT.PlayerState.BUFFERING; }
+            if (slot.type === 'audio') {
+                isPlaying = !slot.audioPlayer.paused;
+            } else {
+                const s = slot.ytPlayer.getPlayerState();
+                isPlaying = s === YT.PlayerState.PLAYING || s === YT.PlayerState.BUFFERING;
+            }
+            
+            // Se si sta per stoppare la traccia corrente, aggiorna il suo colore a "non attivo"
+            if (isPlaying) {
+                app.activeSlotIndex = -1; // Rende la traccia non attiva prima di aggiornare l'UI
+                updateGainSliderUI(index); // Aggiorna il colore a grigio
+            }
             
             stopAll(index);
+
             if (isPlaying) {
-                if (slot.type === 'audio') slot.audioPlayer.pause(); else slot.ytPlayer.pauseVideo();
+                if (slot.type === 'audio') slot.audioPlayer.pause();
+                else slot.ytPlayer.pauseVideo();
+                app.activeSlotIndex = -1; // Nessuna traccia attiva
             } else {
-                if (slot.type === 'audio') slot.audioPlayer.play(); else slot.ytPlayer.playVideo();
+                if (slot.type === 'audio') slot.audioPlayer.play();
+                else slot.ytPlayer.playVideo();
                 app.activeSlotIndex = index;
                 ui.playButtons[index].classList.add('playing-number');
                 ui.gainContainers[index].classList.add('playing-gain');
                 startUpdatingUI();
                 if (app.settings.autoSkipEnabled) startAutoSkipTimer();
             }
+            updateGainSliderUI(index); // Aggiorna sempre l'UI del bottone cliccato
         }
 
-        function updatePlayerUI() {
-            const isSlotActive = app.activeSlotIndex !== -1, slot = isSlotActive ? app.slots[app.activeSlotIndex] : null;
-            ui.seekBar.disabled = !isSlotActive; ui.skipForwardBtn.disabled = !isSlotActive; ui.skipBackwardBtn.disabled = !isSlotActive; ui.playPauseBtn.disabled = !isSlotActive;
-            if (!isSlotActive || !slot.type) {
-                ui.playIcon.classList.add('hidden'); ui.pauseIcon.classList.remove('hidden');
-                ui.currentTimeEl.textContent = "00:00"; ui.durationEl.textContent = "00:00";
-                ui.seekBar.value = 0; stopUpdatingUI(); return;
-            }
-            let isPlaying, currentTime = 0, duration = 0;
-            if (slot.type === 'audio') {
-                isPlaying = !slot.audioPlayer.paused;
-                currentTime = slot.audioPlayer.currentTime;
-                duration = isNaN(slot.audioPlayer.duration) ? slot.duration : slot.audioPlayer.duration;
-            } else if (slot.type === 'youtube' && slot.ytPlayer?.getPlayerState) {
-                const s = slot.ytPlayer.getPlayerState(); isPlaying = s === YT.PlayerState.PLAYING || s === YT.PlayerState.BUFFERING;
-                currentTime = slot.ytPlayer.getCurrentTime() || 0;
-                duration = slot.ytPlayer.getDuration() || 0;
-            }
-            slot.duration = duration;
-            if (isPlaying) { ui.playIcon.classList.add('hidden'); ui.pauseIcon.classList.remove('hidden'); }
-            else { ui.playIcon.classList.remove('hidden'); ui.pauseIcon.classList.add('hidden'); stopUpdatingUI(); }
-            ui.seekBar.max = duration; ui.seekBar.value = currentTime;
-            ui.currentTimeEl.textContent = formatTime(currentTime); ui.durationEl.textContent = formatTime(duration);
-        }
-
-        function setGain(index, gainValue) {
-            const slot = app.slots[index];
-            if (!slot || !slot.type) return;
-            gainValue = Math.max(0, Math.min(2, gainValue));
-            slot.gain = gainValue;
-            if (slot.type === 'audio' && app.audio.isSetup) {
-                app.audio.gains[index].gain.setValueAtTime(gainValue, app.audio.context.currentTime);
-            } else if (slot.type === 'youtube' && slot.ytPlayer?.setVolume) {
-                slot.ytPlayer.setVolume(gainValue * 50);
-            }
-            updateGainSliderUI(index);
-        }
-
+        function updatePlayerUI() { const isSlotActive = app.activeSlotIndex !== -1, slot = isSlotActive ? app.slots[app.activeSlotIndex] : null; ui.seekBar.disabled = !isSlotActive; ui.skipForwardBtn.disabled = !isSlotActive; ui.skipBackwardBtn.disabled = !isSlotActive; ui.playPauseBtn.disabled = !isSlotActive; if (!isSlotActive || !slot.type) { ui.playIcon.classList.add('hidden'); ui.pauseIcon.classList.remove('hidden'); ui.currentTimeEl.textContent = "00:00"; ui.durationEl.textContent = "00:00"; ui.seekBar.value = 0; stopUpdatingUI(); return; } let isPlaying, currentTime = 0, duration = 0; if (slot.type === 'audio') { isPlaying = !slot.audioPlayer.paused; currentTime = slot.audioPlayer.currentTime; duration = isNaN(slot.audioPlayer.duration) ? slot.duration : slot.audioPlayer.duration; } else if (slot.type === 'youtube' && slot.ytPlayer?.getPlayerState) { const s = slot.ytPlayer.getPlayerState(); isPlaying = s === 1 || s === 3; currentTime = slot.ytPlayer.getCurrentTime() || 0; duration = slot.ytPlayer.getDuration() || 0; } slot.duration = duration; if (isPlaying) { ui.playIcon.classList.add('hidden'); ui.pauseIcon.classList.remove('hidden'); } else { ui.playIcon.classList.remove('hidden'); ui.pauseIcon.classList.add('hidden'); stopUpdatingUI(); } ui.seekBar.max = duration; ui.seekBar.value = currentTime; ui.currentTimeEl.textContent = formatTime(currentTime); ui.durationEl.textContent = formatTime(duration); }
+        function setGain(index, gainValue) { const slot = app.slots[index]; if (!slot || !slot.type) return; gainValue = Math.max(0, Math.min(2, gainValue)); slot.gain = gainValue; if (slot.type === 'audio' && app.audio.isSetup) { app.audio.gains[index].gain.setValueAtTime(gainValue, app.audio.context.currentTime); } else if (slot.type === 'youtube' && slot.ytPlayer?.setVolume) { slot.ytPlayer.setVolume(gainValue * 50); } updateGainSliderUI(index); }
+        
+        // --- MODIFICA #3: Logica colore aggiornata ---
         function updateGainSliderUI(index) {
             const container = ui.gainContainers[index];
             if (!container) return;
             const gainValue = app.slots[index].gain;
-            const boostFill = container.querySelector('.gain-fill-boost');
-            const cutFill = container.querySelector('.gain-fill-cut');
             const thumb = container.querySelector('.gain-thumb');
             const dbDisplay = container.querySelector('.gain-db-display');
             const percentage = (gainValue / 2) * 100;
-            thumb.style.bottom = `calc(${percentage}% - 7px)`;
-            if (gainValue >= 1.0) {
-                boostFill.style.height = `${percentage - 50}%`;
-                cutFill.style.height = '0%';
+            thumb.style.bottom = `calc(${percentage}% - 2px)`;
+            const isDefaultGain = Math.abs(gainValue - 1.0) < 0.01;
+            
+            // La fonte di verità per decidere se è in play è l'activeSlotIndex
+            const isPlaying = (app.activeSlotIndex === index);
+            
+            let baseHue = 145; 
+            let baseSaturation = 60; 
+            // Se sta suonando, parte da un verde più acceso, altrimenti da un grigio scuro
+            let baseLightness = isPlaying ? 50 : 22; 
+            
+            let finalColor;
+
+            if (isDefaultGain) {
+                 finalColor = isPlaying ? `hsl(${baseHue}, ${baseSaturation}%, 42%)` : ''; // Usa colore di default del CSS
             } else {
-                boostFill.style.height = '0%';
-                cutFill.style.height = `${50 - percentage}%`;
+                if (gainValue > 1.0) { // Aumento Gain
+                    const boostRatio = (gainValue - 1.0);
+                    const newLightness = baseLightness + (25 * boostRatio);
+                    finalColor = `hsl(${baseHue}, ${baseSaturation}%, ${newLightness}%)`;
+                } else { // Taglio Gain
+                    const cutRatio = (1.0 - gainValue);
+                    // Valore ridotto da 15 a 10 per un verde meno scuro
+                    const newLightness = baseLightness - (10 * cutRatio); 
+                    finalColor = `hsl(${baseHue}, ${baseSaturation}%, ${newLightness}%)`;
+                }
             }
+            
+            // Applica il colore calcolato
+            container.style.backgroundColor = finalColor;
+            ui.playButtons[index].style.backgroundColor = finalColor;
+
             let db = gainValue > 0 ? 20 * Math.log10(gainValue) : -Infinity;
             dbDisplay.textContent = db === -Infinity ? '-inf dB' : `${db.toFixed(1)} dB`;
         }
-        
-        // La funzione che mancava e che collega tutti i pulsanti.
-        function attachEventListeners() {
-            ui.fileInputs.forEach((input, startIndex) => { input.addEventListener('change', (e) => { Array.from(e.target.files).forEach((file, fileIndex) => { if (startIndex + fileIndex < 4) loadAudioFile(file, startIndex + fileIndex); }); input.value = null; }); });
-            ui.youtubeBtns.forEach(btn => { btn.addEventListener('click', () => { if(btn.classList.contains('disabled')) return; app.targetSlotForLink = parseInt(btn.dataset.index); ui.youtube.modal.classList.remove('hidden'); ui.youtube.input.focus(); }); });
-            ui.youtube.confirmBtn.addEventListener('click', () => { const url = ui.youtube.input.value; if (url && app.targetSlotForLink !== -1) loadYoutubeLink(url, app.targetSlotForLink); ui.youtube.input.value = ''; ui.youtube.modal.classList.add('hidden'); app.targetSlotForLink = -1; });
-            ui.youtube.cancelBtn.addEventListener('click', () => { ui.youtube.input.value = ''; ui.youtube.modal.classList.add('hidden'); app.targetSlotForLink = -1; });
-            
-            ui.playPauseBtn.addEventListener('click', () => { if (app.activeSlotIndex !== -1) playSlot(app.activeSlotIndex); });
-            ui.playButtons.forEach((btn, index) => btn.addEventListener('click', () => playSlot(index)));
 
-            ui.gainContainers.forEach((container, index) => {
-                const startDrag = (event) => { if (!app.slots[index].type) return; event.preventDefault(); if (app.activeSlotIndex !== index) playSlot(index); app.uiState.isDraggingGain = true; app.uiState.dragStartIndex = index; handleGainDrag(event); document.addEventListener('mousemove', handleGainDrag); document.addEventListener('touchmove', handleGainDrag, { passive: false }); document.addEventListener('mouseup', endDrag); document.addEventListener('touchend', endDrag); };
-                const endDrag = () => { app.uiState.isDraggingGain = false; document.removeEventListener('mousemove', handleGainDrag); document.removeEventListener('touchmove', handleGainDrag); document.removeEventListener('mouseup', endDrag); document.removeEventListener('touchend', endDrag); };
-                const handleGainDrag = (event) => { if (!app.uiState.isDraggingGain) return; const index = app.uiState.dragStartIndex; const container = ui.gainContainers[index]; const rect = container.getBoundingClientRect(); const clientY = event.touches ? event.touches[0].clientY : event.clientY; const relativeY = rect.bottom - clientY; const percentage = Math.max(0, Math.min(100, (relativeY / rect.height) * 100)); const gainValue = (percentage / 100) * 2; setGain(index, gainValue); };
-                container.addEventListener('mousedown', startDrag);
-                container.addEventListener('touchstart', startDrag, { passive: false });
-                container.querySelector('.reset-gain-btn').addEventListener('click', (e) => { e.stopPropagation(); setGain(index, 1.0); });
-            });
-
-            ui.toggleGainViewBtn.addEventListener('click', () => {
-                app.uiState.isGainView = !app.uiState.isGainView;
-                document.querySelectorAll('.slot-ui-container').forEach(el => {
-                    el.querySelector('.play-btn-number').classList.toggle('hidden', app.uiState.isGainView);
-                    el.querySelector('.gain-slider-container').classList.toggle('hidden', !app.uiState.isGainView);
-                });
-            });
-
-            app.slots.forEach((slot, index) => { slot.audioPlayer.addEventListener('play', () => { if(index === app.activeSlotIndex) startUpdatingUI(); }); slot.audioPlayer.addEventListener('pause', () => { if(index === app.activeSlotIndex) stopUpdatingUI(); }); slot.audioPlayer.addEventListener('ended', () => { if(index === app.activeSlotIndex && app.settings.autoSkipEnabled) startAutoSkipTimer(); }); slot.audioPlayer.addEventListener('timeupdate', () => { if(index === app.activeSlotIndex) updatePlayerUI(); }); });
-            ui.seekBar.addEventListener('input', (e) => { if (app.activeSlotIndex !== -1) { const s = app.slots[app.activeSlotIndex]; if (s.type === 'audio') s.audioPlayer.currentTime = e.target.value; if (s.type === 'youtube') s.ytPlayer.seekTo(e.target.value, true); }});
-            
-            ui.settings.openBtn.addEventListener('click',()=>ui.settings.modal.classList.remove('hidden'));
-            ui.settings.closeBtn.addEventListener('click',()=>ui.settings.modal.classList.add('hidden'));
-            ui.clearBtn.addEventListener('click', clearAllFiles);
-            ui.settings.autoSkipSwitch.addEventListener('click',()=>{app.settings.autoSkipEnabled=!app.settings.autoSkipEnabled;updateSwitchUI(app.settings.autoSkipEnabled, ui.settings.autoSkipSwitch, ui.settings.autoSkipSwitchKnob);saveSettings();});
-            ui.settings.autoSkipDurationInput.addEventListener('change',(e)=>{const t=parseInt(e.target.value,10);if(t>0){app.settings.autoSkipDuration=t;saveSettings()}});
-            ui.settings.skipIntervalInput.addEventListener('change',(e)=>{const t=parseInt(e.target.value,10);if(t>0){app.settings.skipInterval=t;ui.skipAmountLabel.textContent=`${t}s`;saveSettings()}});
-            ui.settings.keepScreenOnSwitch.addEventListener('click', () => { app.settings.keepScreenOn = !app.settings.keepScreenOn; updateSwitchUI(app.settings.keepScreenOn, ui.settings.keepScreenOnSwitch, ui.settings.keepScreenOnSwitchKnob); saveSettings(); handleWakeLock(); });
-            ui.settings.normalizeAudioSwitch.addEventListener('click', () => { app.settings.normalizeAudio = !app.settings.normalizeAudio; updateSwitchUI(app.settings.normalizeAudio, ui.settings.normalizeAudioSwitch, ui.settings.normalizeAudioSwitchKnob); saveSettings(); handleNormalization(); });
-            document.addEventListener('visibilitychange', async () => { if ('wakeLock' in navigator && app.settings.keepScreenOn && document.visibilityState === 'visible' && !app.wakeLockSentinel) await handleWakeLock(); });
-        }
-        
+        async function autoGain() { if (app.activeSlotIndex === -1 || app.slots[app.activeSlotIndex].type !== 'audio') { alert("Per usare il Gain Automatico, avvia prima la riproduzione di un file audio (es. MP3) che userai come riferimento."); return; } if (!app.audio.isSetup) { alert("L'analizzatore audio non è ancora pronto."); return; } const getRMS = (analyser, dataArray) => { analyser.getFloatTimeDomainData(dataArray); let sum = 0; for (let i = 0; i < dataArray.length; i++) { sum += dataArray[i] * dataArray[i]; } return Math.sqrt(sum / dataArray.length); }; const measureTrackRMS = (index) => new Promise(resolve => { const player = app.slots[index].audioPlayer; const wasPaused = player.paused; const originalTime = player.currentTime; if (wasPaused) player.play(); setTimeout(() => { const rms = getRMS(app.audio.analysers[index], new Float32Array(app.audio.analysers[index].fftSize)); if(wasPaused) { player.pause(); player.currentTime = originalTime; } resolve(rms); }, 150); }); const referenceIndex = app.activeSlotIndex; ui.settings.autoGainBtn.textContent = "Analisi..."; ui.settings.autoGainBtn.disabled = true; const referenceRMS = await measureTrackRMS(referenceIndex); if (referenceRMS === 0) { alert("La traccia di riferimento è silente."); ui.settings.autoGainBtn.disabled = false; ui.settings.autoGainBtn.textContent = "Gain Automatico (solo Audio)"; return; } for (let i = 0; i < app.slots.length; i++) { if (i === referenceIndex || app.slots[i].type !== 'audio') continue; const targetRMS = await measureTrackRMS(i); if (targetRMS > 0) { setGain(i, app.slots[i].gain * (referenceRMS / targetRMS)); } } ui.settings.autoGainBtn.textContent = "Gain Automatico (solo Audio)"; ui.settings.autoGainBtn.disabled = false; alert("Gain automatico applicato alle altre tracce audio!"); }
+        function attachEventListeners() { ui.fileInputs.forEach((input, startIndex) => { input.addEventListener('change', (e) => { Array.from(e.target.files).forEach((file, fileIndex) => { if (startIndex + fileIndex < 4) loadAudioFile(file, startIndex + fileIndex); }); input.value = null; }); }); ui.youtubeBtns.forEach(btn => { btn.addEventListener('click', () => { if(btn.classList.contains('disabled')) return; app.targetSlotForLink = parseInt(btn.dataset.index); ui.youtube.modal.classList.remove('hidden'); ui.youtube.input.focus(); }); }); ui.youtube.confirmBtn.addEventListener('click', () => { const url = ui.youtube.input.value; if (url && app.targetSlotForLink !== -1) loadYoutubeLink(url, app.targetSlotForLink); ui.youtube.input.value = ''; ui.youtube.modal.classList.add('hidden'); app.targetSlotForLink = -1; }); ui.youtube.cancelBtn.addEventListener('click', () => { ui.youtube.input.value = ''; ui.youtube.modal.classList.add('hidden'); app.targetSlotForLink = -1; }); ui.playPauseBtn.addEventListener('click', () => { if (app.activeSlotIndex !== -1) playSlot(app.activeSlotIndex); }); ui.playButtons.forEach((btn, index) => btn.addEventListener('click', () => playSlot(index))); ui.gainContainers.forEach((container, index) => { const startDrag = (event) => { if (!app.slots[index].type) return; event.preventDefault(); app.uiState.dragStartY = event.touches ? event.touches[0].clientY : event.clientY; app.uiState.isDraggingGain = false; app.uiState.dragStartIndex = index; if (app.activeSlotIndex !== index) playSlot(index); document.addEventListener('mousemove', handleGainDrag); document.addEventListener('touchmove', handleGainDrag, { passive: false }); document.addEventListener('mouseup', endDrag); document.addEventListener('touchend', endDrag); }; const endDrag = () => { app.uiState.isDraggingGain = false; document.removeEventListener('mousemove', handleGainDrag); document.removeEventListener('touchmove', handleGainDrag); document.removeEventListener('mouseup', endDrag); document.removeEventListener('touchend', endDrag); }; const handleGainDrag = (event) => { requestAnimationFrame(() => { const index = app.uiState.dragStartIndex; const clientY = event.touches ? event.touches[0].clientY : event.clientY; const deltaY = Math.abs(clientY - app.uiState.dragStartY); if (!app.uiState.isDraggingGain && deltaY <= 5) return; app.uiState.isDraggingGain = true; const rect = ui.gainContainers[index].getBoundingClientRect(); const percentage = Math.max(0, Math.min(100, ((rect.bottom - clientY) / rect.height) * 100)); const easedPercentage = Math.pow(percentage / 100, 1.5) * 100; const gainValue = (easedPercentage / 100) * 2; setGain(index, gainValue); }); }; container.addEventListener('mousedown', startDrag); container.addEventListener('touchstart', startDrag, { passive: false }); }); ui.toggleGainViewBtn.addEventListener('click', () => { app.uiState.isGainView = !app.uiState.isGainView; ui.slotUIContainers.forEach((el, i) => { el.querySelector('.play-btn-number').classList.toggle('hidden', app.uiState.isGainView); el.querySelector('.gain-slider-container').classList.toggle('hidden', !app.uiState.isGainView); if(app.uiState.isGainView) { updateGainSliderUI(i); } }); updateClearOrResetButton(); }); app.slots.forEach((slot, index) => { slot.audioPlayer.addEventListener('play', () => { if(index === app.activeSlotIndex) startUpdatingUI(); }); slot.audioPlayer.addEventListener('pause', () => { if(index === app.activeSlotIndex) stopUpdatingUI(); }); slot.audioPlayer.addEventListener('ended', () => { if(index === app.activeSlotIndex && app.settings.autoSkipEnabled) startAutoSkipTimer(); }); slot.audioPlayer.addEventListener('timeupdate', () => { if(index === app.activeSlotIndex) updatePlayerUI(); }); }); ui.seekBar.addEventListener('input', (e) => { if (app.activeSlotIndex !== -1) { const s = app.slots[app.activeSlotIndex]; if (s.type === 'audio') s.audioPlayer.currentTime = e.target.value; if (s.type === 'youtube') s.ytPlayer.seekTo(e.target.value, true); }}); ui.settings.openBtn.addEventListener('click',()=>ui.settings.modal.classList.remove('hidden')); ui.settings.closeBtn.addEventListener('click',()=>ui.settings.modal.classList.add('hidden')); ui.clearOrResetBtn.addEventListener('click', () => { if (app.uiState.isGainView) { app.slots.forEach((slot, index) => { if (slot.type) setGain(index, 1.0); }); } else { clearAllFiles(); } }); ui.creditsBtn.addEventListener('click', () => ui.credits.modal.classList.remove('hidden')); ui.credits.closeBtn.addEventListener('click', () => ui.credits.modal.classList.add('hidden')); ui.help.closeBtn.addEventListener('click', () => ui.help.modal.classList.add('hidden')); ui.settings.autoGainBtn.addEventListener('click', autoGain); ui.settings.autoSkipSwitch.addEventListener('click',()=>{app.settings.autoSkipEnabled=!app.settings.autoSkipEnabled;updateSwitchUI(app.settings.autoSkipEnabled, ui.settings.autoSkipSwitch, ui.settings.autoSkipSwitchKnob);saveSettings();}); ui.settings.autoSkipDurationInput.addEventListener('change',(e)=>{const t=parseInt(e.target.value,10);if(t>0){app.settings.autoSkipDuration=t;saveSettings()}}); ui.settings.skipIntervalInput.addEventListener('change',(e)=>{const t=parseInt(e.target.value,10);if(t>0){app.settings.skipInterval=t;ui.skipAmountLabel.textContent=`${t}s`;saveSettings()}}); ui.settings.keepScreenOnSwitch.addEventListener('click', () => { app.settings.keepScreenOn = !app.settings.keepScreenOn; updateSwitchUI(app.settings.keepScreenOn, ui.settings.keepScreenOnSwitch, ui.settings.keepScreenOnSwitchKnob); saveSettings(); handleWakeLock(); }); const helpTexts = { clearOrResetBtn: { title: "Pulisci / Resetta", content: "In modalità 'Numeri', pulisce tutti gli slot. In modalità 'Gain', resetta il guadagno di tutti i fader a 0.0 dB." }, toggleGainViewBtn: { title: "Vista Gain/Numeri", content: "Passa dalla visualizzazione dei pulsanti numerici a quella dei fader verticali per il controllo del guadagno." }, settingsBtn: { title: "Impostazioni", content: "Apre il pannello con tutte le opzioni di configurazione." }, creditsBtn: { title: "Crediti", content: "Mostra le informazioni sugli autori dell'applicazione." } }; let longPressTimer; Object.keys(helpTexts).forEach(id => { const el = document.getElementById(id); if (el) { const help = helpTexts[id]; const showHelp = () => { ui.help.title.textContent = help.title; ui.help.content.textContent = help.content; ui.help.modal.classList.remove('hidden'); }; const startPress = (e) => { e.preventDefault(); longPressTimer = setTimeout(showHelp, 700); }; const endPress = () => { clearTimeout(longPressTimer); }; el.addEventListener('mousedown', startPress); el.addEventListener('mouseup', endPress); el.addEventListener('mouseleave', endPress); el.addEventListener('touchstart', startPress, { passive: true }); el.addEventListener('touchend', endPress); } }); ui.skipForwardBtn.addEventListener('click',()=>{if(app.activeSlotIndex!==-1){const s=app.slots[app.activeSlotIndex];if(s.type==='audio')s.audioPlayer.currentTime+=app.settings.skipInterval;if(s.type==='youtube')s.ytPlayer.seekTo(s.ytPlayer.getCurrentTime()+app.settings.skipInterval,true)}}); ui.skipBackwardBtn.addEventListener('click',()=>{if(app.activeSlotIndex!==-1){const s=app.slots[app.activeSlotIndex];if(s.type==='audio')s.audioPlayer.currentTime-=app.settings.skipInterval;if(s.type==='youtube')s.ytPlayer.seekTo(s.ytPlayer.getCurrentTime()-app.settings.skipInterval,true)}}); document.addEventListener('visibilitychange', async () => { if ('wakeLock' in navigator && app.settings.keepScreenOn && document.visibilityState === 'visible' && !app.wakeLockSentinel) await handleWakeLock(); }); }
         const loadAudioFile = (file, index) => { if (!app.audio.isSetup) setupAudioProcessing(); clearSlot(index); app.slots[index].type = 'audio'; app.slots[index].audioPlayer.src = URL.createObjectURL(file); ui.filenameDisplays[index].textContent = file.name; ui.playButtons[index].disabled = false; setGain(index, 1.0); };
         const loadYoutubeLink = (url, index) => { const videoId = parseYoutubeId(url); if (!videoId) { alert("Link YouTube non valido."); return; } clearSlot(index); app.slots[index].type = 'youtube'; app.slots[index].ytPlayer.cueVideoById(videoId); ui.playButtons[index].disabled = false; setGain(index, 1.0); };
         const parseYoutubeId = (url) => { const match = url.match(/^.*(?:youtu.be(?:\.com)?\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]{11}).*/); return (match && match[1]) ? match[1] : null; };
-        const clearSlot = (index) => { const slot = app.slots[index]; if (slot.titlePollInterval) clearInterval(slot.titlePollInterval); if (slot.type === 'audio' && slot.audioPlayer.src) { URL.revokeObjectURL(slot.audioPlayer.src); slot.audioPlayer.removeAttribute('src'); } else if (slot.type === 'youtube' && slot.ytPlayer?.stopVideo) { slot.ytPlayer.stopVideo(); } slot.type = null; ui.filenameDisplays[index].textContent = ''; slot.gain = 1.0; updateGainSliderUI(index); };
-        const clearAllFiles = () => { stopAll(); for (let i=0; i<4; i++) { clearSlot(i); ui.playButtons[i].disabled = true; } app.activeSlotIndex = -1; updatePlayerUI(); };
+        const clearSlot = (index) => { const slot = app.slots[index]; if (slot.titlePollInterval) clearInterval(slot.titlePollInterval); if (slot.type === 'audio' && slot.audioPlayer.src) { URL.revokeObjectURL(slot.audioPlayer.src); slot.audioPlayer.removeAttribute('src'); } else if (slot.type === 'youtube' && slot.ytPlayer?.stopVideo) { slot.ytPlayer.stopVideo(); } slot.type = null; ui.filenameDisplays[index].textContent = ''; setGain(index, 1.0); };
         
-        app.handleError = function(event, playerIndex) { /* ... */ };
+        // --- MODIFICA #1: Aggiunto reset del colore di sfondo in clearAllFiles ---
+        const clearAllFiles = () => {
+            stopAll();
+            for (let i = 0; i < 4; i++) {
+                clearSlot(i);
+                ui.playButtons[i].disabled = true;
+                ui.playButtons[i].style.backgroundColor = ''; // Resetta il colore
+            }
+            app.activeSlotIndex = -1;
+            updatePlayerUI();
+        };
+
+        app.handleError = function(event, playerIndex) { onPlayerError(event, playerIndex); };
         app.handleStateChange = function(event, index) { const slot = app.slots[index]; if (!slot) return; if (slot.type === 'youtube' && event.data === YT.PlayerState.CUED) { if (slot.titlePollInterval) clearInterval(slot.titlePollInterval); let attempts = 0; slot.titlePollInterval = setInterval(() => { if (app.slots[index].type !== 'youtube') { clearInterval(slot.titlePollInterval); return; } const videoData = slot.ytPlayer.getVideoData(); if (videoData && videoData.title) { ui.filenameDisplays[index].textContent = videoData.title; clearInterval(slot.titlePollInterval); slot.titlePollInterval = null; } else { attempts++; if (attempts > 20) { clearInterval(slot.titlePollInterval); slot.titlePollInterval = null; } } }, 250); } if (index === app.activeSlotIndex) { const s = event.data; if (s === YT.PlayerState.PLAYING) startUpdatingUI(); if (s === YT.PlayerState.PAUSED || s === YT.PlayerState.ENDED) stopUpdatingUI(); if (s === YT.PlayerState.ENDED && app.settings.autoSkipEnabled) startAutoSkipTimer(); updatePlayerUI(); } };
-        
         const formatTime = (s) => { const m=Math.floor(s/60); const c=Math.floor(s%60); return `${m.toString().padStart(2,'0')}:${c.toString().padStart(2,'0')}`; };
         const startAutoSkipTimer = () => { if (app.autoSkipTimer) clearTimeout(app.autoSkipTimer); app.autoSkipTimer = setTimeout(() => { let nextIndex = app.activeSlotIndex >= 0 ? app.activeSlotIndex + 1 : 0; for (let i = 0; i < app.slots.length; i++) { if (nextIndex >= app.slots.length) nextIndex = 0; if (app.slots[nextIndex].type) { playSlot(nextIndex); return; } nextIndex++; } }, app.settings.autoSkipDuration * 1000); };
         const saveSettings = () => { localStorage.setItem('audioComparerSettings',JSON.stringify(app.settings)); };
         const updateSwitchUI = (isOn, switchEl, knobEl) => { if(isOn){switchEl.classList.remove('bg-gray-600');switchEl.classList.add('bg-orange-500');knobEl.style.transform='translateX(1.25rem)'}else{switchEl.classList.add('bg-gray-600');switchEl.classList.remove('bg-orange-500');knobEl.style.transform='translateX(0.25rem)'}};
         const handleWakeLock = async () => { if ('wakeLock' in navigator) { try { if (app.settings.keepScreenOn && !app.wakeLockSentinel) { app.wakeLockSentinel = await navigator.wakeLock.request('screen'); app.wakeLockSentinel.addEventListener('release', () => { app.wakeLockSentinel = null; }); } else if (!app.settings.keepScreenOn && app.wakeLockSentinel) { await app.wakeLockSentinel.release(); app.wakeLockSentinel = null; } } catch (err) { console.error(`${err.name}, ${err.message}`); } } else { ui.settings.keepScreenOnSwitch.parentElement.style.display = 'none'; }};
-        const handleNormalization = () => { if (!app.audio.isSetup) return; app.slots.forEach((slot, index) => { const source = app.audio.sources[index]; const compressor = app.audio.compressors[index]; const gain = app.audio.gains[index]; source.disconnect(); if (app.settings.normalizeAudio) { source.connect(compressor).connect(gain); } else { source.connect(gain); } }); };
-        const loadSettings = () => { const s=JSON.parse(localStorage.getItem('audioComparerSettings')); if(s){ Object.assign(app.settings, s); } ui.settings.autoSkipDurationInput.value=app.settings.autoSkipDuration; ui.settings.skipIntervalInput.value=app.settings.skipInterval; ui.skipAmountLabel.textContent=`${app.settings.skipInterval}s`; updateSwitchUI(app.settings.autoSkipEnabled, ui.settings.autoSkipSwitch, ui.settings.autoSkipSwitchKnob); updateSwitchUI(app.settings.keepScreenOn, ui.settings.keepScreenOnSwitch, ui.settings.keepScreenOnSwitchKnob); updateSwitchUI(app.settings.normalizeAudio, ui.settings.normalizeAudioSwitch, ui.settings.normalizeAudioSwitchKnob); handleWakeLock(); };
+        const loadSettings = () => { const s=JSON.parse(localStorage.getItem('audioComparerSettings')); if(s){ Object.assign(app.settings, s); } ui.settings.autoSkipDurationInput.value=app.settings.autoSkipDuration; ui.settings.skipIntervalInput.value=app.settings.skipInterval; ui.skipAmountLabel.textContent=`${app.settings.skipInterval}s`; updateSwitchUI(app.settings.autoSkipEnabled, ui.settings.autoSkipSwitch, ui.settings.autoSkipSwitchKnob); updateSwitchUI(app.settings.keepScreenOn, ui.settings.keepScreenOnSwitch, ui.settings.keepScreenOnSwitchKnob); handleWakeLock(); };
+        const updateClearOrResetButton = () => { if(app.uiState.isGainView){ ui.clearOrResetBtn.innerHTML = ICONS.reset; ui.clearOrResetBtn.title = "Resetta tutti i gain"; } else { ui.clearOrResetBtn.innerHTML = ICONS.clear; ui.clearOrResetBtn.title = "Pulisci tutto"; }};
         
         initApp();
     });
