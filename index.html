@@ -39,7 +39,7 @@
         .gain-db-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Inter', sans-serif; color: rgba(255, 255, 255, 0.9); font-size: 2rem; line-height: 2.25rem; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.7); pointer-events: none; z-index: 10; }
         .header-btn-container { display: flex; flex-direction: column; align-items: center; }
         .header-btn-label { font-size: 0.65rem; color: #9CA3AF; margin-top: 2px; letter-spacing: 0.5px; }
-        .upload-label { height: 2.5rem; display: flex; align-items: center; justify-content: center; }
+        .upload-label-container { min-height: 2.5rem; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200 flex items-center justify-center">
@@ -55,6 +55,9 @@
                     <button id="toggleGainViewBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" title="Mostra/Nascondi Controlli Gain"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" /></svg></button>
                     <span class="header-btn-label">Gain</span>
                 </div>
+                <div class="header-btn-container">
+                    <span class="text-xs text-gray-500">v. 2.0</span>
+                </div>
                  <div class="header-btn-container">
                     <button id="settingsBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" title="Impostazioni"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg></button>
                     <span class="header-btn-label">Setup</span>
@@ -64,23 +67,34 @@
         <div class="flex-grow flex flex-col sm:flex-row gap-4 min-h-0">
             <div class="panel rounded-2xl shadow-xl p-4 flex flex-col gap-4 w-full sm:w-1/3">
                 <div class="grid grid-cols-2 gap-3">
-                    <input type="file" id="file1" class="file-input" multiple><input type="file" id="file2" class="file-input" multiple><input type="file" id="file3" class="file-input" multiple><input type="file" id="file4" class="file-input" multiple>
+                    <input type="file" id="file1" class="file-input" multiple>
+                    <input type="file" id="file2" class="file-input" multiple>
+                    <input type="file" id="file3" class="file-input" multiple>
+                    <input type="file" id="file4" class="file-input" multiple>
                     
                     <div>
                         <div class="split-button-container"><label for="file1" class="split-button-part" title="Carica file locale">♫</label><div class="split-button-part youtube-btn disabled" data-index="0" title="Incolla link YouTube">▶</div></div>
-                        <p id="upload-label-0" class="upload-label text-xs text-gray-400 mt-1 truncate px-1">Carica Audio/YT</p>
+                        <div class="upload-label-container">
+                            <p id="upload-label-0" class="text-xs text-center text-gray-400 mt-1 truncate px-1">Carica Audio/YT</p>
+                        </div>
                     </div>
                     <div>
                         <div class="split-button-container"><label for="file2" class="split-button-part" title="Carica file locale">♫</label><div class="split-button-part youtube-btn disabled" data-index="1" title="Incolla link YouTube">▶</div></div>
-                        <p id="upload-label-1" class="upload-label text-xs text-gray-400 mt-1 truncate px-1">Carica Audio/YT</p>
+                        <div class="upload-label-container">
+                           <p id="upload-label-1" class="text-xs text-center text-gray-400 mt-1 truncate px-1">Carica Audio/YT</p>
+                        </div>
                     </div>
                     <div>
                         <div class="split-button-container"><label for="file3" class="split-button-part" title="Carica file locale">♫</label><div class="split-button-part youtube-btn disabled" data-index="2" title="Incolla link YouTube">▶</div></div>
-                        <p id="upload-label-2" class="upload-label text-xs text-gray-400 mt-1 truncate px-1">Carica Audio/YT</p>
+                        <div class="upload-label-container">
+                            <p id="upload-label-2" class="text-xs text-center text-gray-400 mt-1 truncate px-1">Carica Audio/YT</p>
+                        </div>
                     </div>
                     <div>
                         <div class="split-button-container"><label for="file4" class="split-button-part" title="Carica file locale">♫</label><div class="split-button-part youtube-btn disabled" data-index="3" title="Incolla link YouTube">▶</div></div>
-                        <p id="upload-label-3" class="upload-label text-xs text-gray-400 mt-1 truncate px-1">Carica Audio/YT</p>
+                        <div class="upload-label-container">
+                            <p id="upload-label-3" class="text-xs text-center text-gray-400 mt-1 truncate px-1">Carica Audio/YT</p>
+                        </div>
                     </div>
                 </div>
                 <div class="bg-gray-900/50 rounded-lg p-3 space-y-3 mt-auto">
@@ -177,9 +191,9 @@
                     if (slot.type === 'youtube' && slot.ytPlayer?.pauseVideo) slot.ytPlayer.pauseVideo();
                 }
             });
-            ui.slotUIContainers.forEach((el, i) => {
+            ui.playButtons.forEach((btn, i) => {
                 if (i !== exceptIndex) {
-                    el.querySelector('.play-btn-number').classList.remove('playing-number');
+                    btn.classList.remove('playing-number');
                 }
             });
             if (app.autoSkipTimer) clearTimeout(app.autoSkipTimer);
@@ -190,32 +204,29 @@
             if (app.slots[index].type === 'audio' && !app.audio.isSetup) setupAudioProcessing();
             
             const slot = app.slots[index];
-            let isPlaying;
+            let isCurrentlyPlaying;
 
-            if (app.activeSlotIndex === index) { // Clicked the currently active slot
-                if (slot.type === 'audio') {
-                    isPlaying = !slot.audioPlayer.paused;
-                } else {
-                    const s = slot.ytPlayer.getPlayerState();
-                    isPlaying = s === YT.PlayerState.PLAYING || s === YT.PlayerState.BUFFERING;
-                }
-            } else { // Clicked a new slot
-                isPlaying = false;
+            // Determina lo stato di riproduzione della traccia cliccata
+            if (slot.type === 'audio') {
+                isCurrentlyPlaying = !slot.audioPlayer.paused;
+            } else {
+                const s = slot.ytPlayer.getPlayerState();
+                isCurrentlyPlaying = s === YT.PlayerState.PLAYING || s === YT.PlayerState.BUFFERING;
             }
             
-            stopAll(index);
-
-            if (isPlaying) {
+            if (isCurrentlyPlaying) {
+                // Se sta suonando, mettila in pausa
                 if (slot.type === 'audio') slot.audioPlayer.pause();
                 else slot.ytPlayer.pauseVideo();
                 ui.playButtons[index].classList.remove('playing-number');
+                stopUpdatingUI();
             } else {
+                // Se è in pausa o è una nuova traccia, avviala
+                stopAll(index); // Ferma tutte le altre tracce
                 if (slot.type === 'audio') slot.audioPlayer.play();
                 else slot.ytPlayer.playVideo();
-                app.activeSlotIndex = index;
-                ui.playButtons.forEach((btn, i) => {
-                    btn.classList.toggle('playing-number', i === index);
-                });
+                app.activeSlotIndex = index; // Imposta come traccia attiva
+                ui.playButtons.forEach((btn, i) => btn.classList.toggle('playing-number', i === index));
                 startUpdatingUI();
                 if (app.settings.autoSkipEnabled) startAutoSkipTimer();
             }
@@ -298,7 +309,7 @@
             const gainValue = app.slots[index].gain;
             const thumb = container.querySelector('.gain-thumb');
             const dbDisplay = container.querySelector('.gain-db-display');
-            const percentage = gainValue / 2.0; // Factor from 0.0 to 1.0
+            const percentage = gainValue / 2.0; // Fattore da 0.0 a 1.0
             
             thumb.style.bottom = `calc(${percentage * 100}% - 2px)`;
             let db = gainValue > 0 ? 20 * Math.log10(gainValue) : -Infinity;
@@ -400,11 +411,13 @@
         
         const clearAllFiles = () => {
             stopAll();
+            if(app.activeSlotIndex !== -1) {
+                ui.playButtons[app.activeSlotIndex].classList.remove('playing-number');
+            }
             app.activeSlotIndex = -1;
             for (let i = 0; i < 4; i++) {
                 clearSlot(i);
                 ui.playButtons[i].disabled = true;
-                ui.playButtons[i].classList.remove('playing-number');
             }
             updatePlayerUI();
         };
@@ -461,6 +474,23 @@
         };
         
         initApp();
+    });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Rileva se il dispositivo NON è basato su iOS/iPadOS o Mac.
+      const isNonAppleDevice = !(/iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                                (navigator.userAgent.includes('Macintosh') && 'ontouchend' in document));
+
+      // Se NON è un dispositivo Apple (es. Windows, Android), applica il filtro per i file audio.
+      // I dispositivi Apple non avranno questo filtro per massima compatibilità, permettendo
+      // di caricare tipi di file che potrebbero non essere standard 'audio/*'.
+      if (isNonAppleDevice) {
+        document.querySelectorAll('input[type=file]').forEach(input => {
+          input.setAttribute('accept', 'audio/*');
+        });
+      }
     });
     </script>
 </body>
