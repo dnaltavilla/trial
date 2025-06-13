@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="theme-color" content="#1F2937" />
+	<link rel="manifest" href="manifest.json">
     <title>FireSTUDIO myREFERENCE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
@@ -562,14 +564,25 @@
                     return;
                 }
 
+                // Ciclo modificato per correggere il problema del gain cumulativo
                 for (let i = 0; i < app.slots.length; i++) {
-                    if (i !== referenceIndex && app.slots[i].type === 'audio' && trackLoudness[i] > 0) {
+                    if (i === referenceIndex) {
+                        continue; // Salta la traccia di riferimento, il suo gain non va toccato.
+                    }
+
+                    // Se la traccia è un file audio analizzabile, calcola e applica il nuovo gain.
+                    if (app.slots[i].type === 'audio' && trackLoudness[i] > 0) {
                         const gainFactor = referenceLoudness / trackLoudness[i];
-                        const newGain = Math.max(0, Math.min(2.0, app.slots[i].gain * gainFactor));
+                        // Il nuovo gain viene calcolato direttamente dal fattore, ignorando il gain precedente.
+                        const newGain = Math.max(0, Math.min(2.0, gainFactor)); 
                         setGain(i, newGain);
+                    } else {
+                        // Per tutte le altre tracce non di riferimento (es. YouTube, audio silenti), resetta il gain a 1.0 (0 dB).
+                        setGain(i, 1.0);
                     }
                 }
                 alert(t.autoGainDoneAlert);
+
             } catch (error) {
                 console.error("Error during Auto-Gain procedure:", error);
             } finally {
@@ -733,5 +746,16 @@
       });
     });
     </script>
+	<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').then(registration => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, err => {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    });
+  }
+</script>
 </body>
 </html>
