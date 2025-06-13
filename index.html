@@ -10,14 +10,24 @@
     <style>
         html, body { height: 100%; overflow: hidden; background-color: #111827; }
         body { font-family: 'Inter', sans-serif; touch-action: manipulation; }
-        .file-input { display: none; }
+        .file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+}
         .split-button-container { display: flex; border-radius: 0.5rem; overflow: hidden; background: linear-gradient(to right, #8B5CF6, #F97316); transition: all 0.3s ease; }
         .split-button-container:hover { box-shadow: 0 0 15px rgba(249, 115, 22, 0.5); }
         .split-button-part { flex: 1; padding: 0.5rem; cursor: pointer; display: flex; justify-content: center; align-items: center; background-color: transparent; color: white; font-size: 1.25rem; transition: all 0.2s ease; }
         .split-button-part:hover { background-color: rgba(255, 255, 255, 0.2); }
         .split-button-part:first-child { border-right: 1px solid rgba(255, 255, 255, 0.3); }
         .youtube-btn.disabled { cursor: not-allowed; background-color: rgba(0,0,0,0.4); filter: grayscale(80%); pointer-events: none; }
+        
+        /* --- MODIFICA #2: Rimossa la proprietà box-shadow --- */
         .playing-number, .playing-gain { background-color: #10B981; color: white !important; transform: scale(1.02); }
+
         input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; background: #4B5563; border-radius: 3px; outline: none; transition: opacity .2s; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: #F97316; cursor: pointer; border-radius: 50%; border: 2px solid white; }
         .main-container { height: 100vh; display: flex; flex-direction: column; }
@@ -40,7 +50,7 @@
             </div>
         </div>
         <div class="flex-grow flex flex-col sm:flex-row gap-4 min-h-0">
-            <div class="panel rounded-2xl shadow-xl p-4 flex flex-col gap-4 w-full sm:w-1/3"><div class="grid grid-cols-2 gap-3"><input type="file" id="file1" class="file-input" accept="audio/*" multiple><input type="file" id="file2" class="file-input" accept="audio/*" multiple><input type="file" id="file3" class="file-input" accept="audio/*" multiple><input type="file" id="file4" class="file-input" accept="audio/*" multiple><div><div class="split-button-container"><label for="file1" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="0" title="Incolla link YouTube">▶</div></div><p id="filename1" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div><div><div class="split-button-container"><label for="file2" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="1" title="Incolla link YouTube">▶</div></div><p id="filename2" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div><div><div class="split-button-container"><label for="file3" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="2" title="Incolla link YouTube">▶</div></div><p id="filename3" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div><div><div class="split-button-container"><label for="file4" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="3" title="Incolla link YouTube">▶</div></div><p id="filename4" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div></div><div class="bg-gray-900/50 rounded-lg p-3 space-y-3 mt-auto"><div class="flex items-center space-x-2"><span id="currentTime" class="text-sm font-mono text-gray-400">00:00</span><input type="range" id="seekBar" value="0" class="w-full" disabled><span id="duration" class="text-sm font-mono text-gray-400">00:00</span></div><div class="flex justify-center items-center space-x-3"><button id="skipBackwardBtn" class="p-2 rounded-full hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:hover:bg-transparent" disabled><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" /></svg></button><span id="skipAmountLabel" class="font-mono text-lg font-bold text-orange-400"></span><button id="playPauseBtn" class="p-2 rounded-full text-white hover:bg-orange-500 transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:text-gray-600" disabled title="Pausa / Riprendi"><svg id="playIcon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 hidden" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg><svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg></button><button id="skipForwardBtn" class="p-2 rounded-full hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:hover:bg-transparent" disabled><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></button></div></div></div>
+            <div class="panel rounded-2xl shadow-xl p-4 flex flex-col gap-4 w-full sm:w-1/3"><div class="grid grid-cols-2 gap-3"><input type="file" id="file1" class="file-input" multiple><input type="file" id="file2" class="file-input" multiple><input type="file" id="file3" class="file-input" multiple><input type="file" id="file4" class="file-input" multiple><div><div class="split-button-container"><label for="file1" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="0" title="Incolla link YouTube">▶</div></div><p id="filename1" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div><div><div class="split-button-container"><label for="file2" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="1" title="Incolla link YouTube">▶</div></div><p id="filename2" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div><div><div class="split-button-container"><label for="file3" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="2" title="Incolla link YouTube">▶</div></div><p id="filename3" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div><div><div class="split-button-container"><label for="file4" class="split-button-part" title="Carica file">♫</label><div class="split-button-part youtube-btn disabled" data-index="3" title="Incolla link YouTube">▶</div></div><p id="filename4" class="text-xs text-gray-400 mt-1.5 truncate px-1"></p></div></div><div class="bg-gray-900/50 rounded-lg p-3 space-y-3 mt-auto"><div class="flex items-center space-x-2"><span id="currentTime" class="text-sm font-mono text-gray-400">00:00</span><input type="range" id="seekBar" value="0" class="w-full" disabled><span id="duration" class="text-sm font-mono text-gray-400">00:00</span></div><div class="flex justify-center items-center space-x-3"><button id="skipBackwardBtn" class="p-2 rounded-full hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:hover:bg-transparent" disabled><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" /></svg></button><span id="skipAmountLabel" class="font-mono text-lg font-bold text-orange-400"></span><button id="playPauseBtn" class="p-2 rounded-full text-white hover:bg-orange-500 transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:text-gray-600" disabled title="Pausa / Riprendi"><svg id="playIcon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 hidden" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg><svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg></button><button id="skipForwardBtn" class="p-2 rounded-full hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:hover:bg-transparent" disabled><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></button></div></div></div>
             <div class="panel rounded-2xl shadow-xl p-4 w-full sm:w-2/3 flex-grow"><div class="grid grid-cols-2 gap-3 h-full"><div class="slot-ui-container" data-index="0"><button class="play-btn-number bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50 w-full h-full">1</button><div class="gain-slider-container hidden"><div class="gain-db-display"></div><div class="gain-track"></div><div class="gain-thumb"></div></div></div><div class="slot-ui-container" data-index="1"><button class="play-btn-number bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50 w-full h-full">2</button><div class="gain-slider-container hidden"><div class="gain-db-display"></div><div class="gain-track"></div><div class="gain-thumb"></div></div></div><div class="slot-ui-container" data-index="2"><button class="play-btn-number bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50 w-full h-full">3</button><div class="gain-slider-container hidden"><div class="gain-db-display"></div><div class="gain-track"></div><div class="gain-thumb"></div></div></div><div class="slot-ui-container" data-index="3"><button class="play-btn-number bg-gray-700 text-gray-500 font-bold text-4xl rounded-xl transition-all duration-200 disabled:opacity-50 w-full h-full">4</button><div class="gain-slider-container hidden"><div class="gain-db-display"></div><div class="gain-track"></div><div class="gain-thumb"></div></div></div></div></div>
         </div>
     </div>
@@ -63,13 +73,6 @@
     let ytPlayers = [];
     let ytApiReady = false;
     const ICONS = { clear: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>`, reset: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M4 4l5 5M20 20l-5-5" /></svg>` };
-    
-    // --- MODIFICA iOS: Funzione per rilevare dispositivi iOS ---
-    function isIOS() {
-        return ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform)
-        || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
-    }
-    
     function onPlayerError(event, playerIndex) { console.error(`Errore YouTube Player ${playerIndex+1}:`, event.data); }
     function onPlayerStateChange(event, playerIndex) { app.handleStateChange(event, playerIndex); }
     function onYouTubeIframeAPIReady() { ytApiReady = true; for (let i = 0; i < 4; i++) { ytPlayers[i] = new YT.Player(`yt-player-${i}`, { height: '0', width: '0', events: { 'onStateChange': (event) => onPlayerStateChange(event, i), 'onError': (event) => onPlayerError(event, i) } }); } }
@@ -80,13 +83,6 @@
             const query = (selector) => document.querySelector(selector);
             const queryAll = (selector) => document.querySelectorAll(selector);
             Object.assign(ui, { filenameDisplays: Array.from({ length: 4 }, (_, i) => query(`#filename${i + 1}`)), playButtons: queryAll('.play-btn-number'), gainContainers: queryAll('.gain-slider-container'), slotUIContainers: queryAll('.slot-ui-container'), fileInputs: Array.from({ length: 4 }, (_, i) => query(`#file${i + 1}`)), youtubeBtns: queryAll('.youtube-btn'), seekBar: query('#seekBar'), currentTimeEl: query('#currentTime'), durationEl: query('#duration'), playPauseBtn: query('#playPauseBtn'), playIcon: query('#playIcon'), pauseIcon: query('#pauseIcon'), skipForwardBtn: query('#skipForwardBtn'), skipBackwardBtn: query('#skipBackwardBtn'), skipAmountLabel: query('#skipAmountLabel'), clearOrResetBtn: query('#clearOrResetBtn'), toggleGainViewBtn: query('#toggleGainViewBtn'), creditsBtn: query('#creditsBtn'), settings: { modal: query('#settingsModal'), openBtn: query('#settingsBtn'), closeBtn: query('#closeSettingsBtn'), autoSkipSwitch: query('#autoSkipSwitch'), autoSkipSwitchKnob: query('#autoSkipSwitchKnob'), autoSkipDurationInput: query('#autoSkipDuration'), skipIntervalInput: query('#skipInterval'), keepScreenOnSwitch: query('#keepScreenOnSwitch'), keepScreenOnSwitchKnob: query('#keepScreenOnSwitchKnob'), autoGainBtn: query('#autoGainBtn'), }, youtube: { modal: query('#youtubeModal'), input: query('#youtubeLinkInput'), confirmBtn: query('#confirmYoutubeBtn'), cancelBtn: query('#cancelYoutubeBtn'), }, help: { modal: query('#helpModal'), title: query('#helpTitle'), content: query('#helpContent'), closeBtn: query('#closeHelpBtn') }, credits: { modal: query('#creditsModal'), closeBtn: query('#closeCreditsBtn') } });
-            
-            // --- MODIFICA iOS: Disabilita upload multiplo se è un dispositivo iOS ---
-            if (isIOS()) {
-                console.log("iOS device detected. Disabling multiple file uploads.");
-                ui.fileInputs.forEach(input => input.removeAttribute('multiple'));
-            }
-            
             app.slots = Array.from({ length: 4 }, (_, i) => ({ type: null, audioPlayer: document.getElementById(`audio${i+1}`), ytPlayer: null, duration: 0, titlePollInterval: null, gain: 1.0 }));
             attachEventListeners();
             loadSettings();
@@ -99,6 +95,7 @@
         const startUpdatingUI = () => { if (!app.masterTimeUpdater) app.masterTimeUpdater = setInterval(updatePlayerUI, 250); };
         const stopUpdatingUI = () => { clearInterval(app.masterTimeUpdater); app.masterTimeUpdater = null; };
 
+        // --- MODIFICA #1: Aggiunto reset del colore di sfondo in stopAll ---
         function stopAll(exceptIndex = -1) {
             stopUpdatingUI();
             app.slots.forEach((slot, index) => {
@@ -111,6 +108,7 @@
                 if (i !== exceptIndex) {
                     el.querySelector('.play-btn-number').classList.remove('playing-number');
                     el.querySelector('.gain-slider-container').classList.remove('playing-gain');
+                    // Resetta il colore del bottone quando non è più attivo
                     ui.playButtons[i].style.backgroundColor = '';
                 }
             });
@@ -129,9 +127,10 @@
                 isPlaying = s === YT.PlayerState.PLAYING || s === YT.PlayerState.BUFFERING;
             }
             
+            // Se si sta per stoppare la traccia corrente, aggiorna il suo colore a "non attivo"
             if (isPlaying) {
-                app.activeSlotIndex = -1; 
-                updateGainSliderUI(index); 
+                app.activeSlotIndex = -1; // Rende la traccia non attiva prima di aggiornare l'UI
+                updateGainSliderUI(index); // Aggiorna il colore a grigio
             }
             
             stopAll(index);
@@ -139,7 +138,7 @@
             if (isPlaying) {
                 if (slot.type === 'audio') slot.audioPlayer.pause();
                 else slot.ytPlayer.pauseVideo();
-                app.activeSlotIndex = -1;
+                app.activeSlotIndex = -1; // Nessuna traccia attiva
             } else {
                 if (slot.type === 'audio') slot.audioPlayer.play();
                 else slot.ytPlayer.playVideo();
@@ -149,12 +148,13 @@
                 startUpdatingUI();
                 if (app.settings.autoSkipEnabled) startAutoSkipTimer();
             }
-            updateGainSliderUI(index);
+            updateGainSliderUI(index); // Aggiorna sempre l'UI del bottone cliccato
         }
 
         function updatePlayerUI() { const isSlotActive = app.activeSlotIndex !== -1, slot = isSlotActive ? app.slots[app.activeSlotIndex] : null; ui.seekBar.disabled = !isSlotActive; ui.skipForwardBtn.disabled = !isSlotActive; ui.skipBackwardBtn.disabled = !isSlotActive; ui.playPauseBtn.disabled = !isSlotActive; if (!isSlotActive || !slot.type) { ui.playIcon.classList.add('hidden'); ui.pauseIcon.classList.remove('hidden'); ui.currentTimeEl.textContent = "00:00"; ui.durationEl.textContent = "00:00"; ui.seekBar.value = 0; stopUpdatingUI(); return; } let isPlaying, currentTime = 0, duration = 0; if (slot.type === 'audio') { isPlaying = !slot.audioPlayer.paused; currentTime = slot.audioPlayer.currentTime; duration = isNaN(slot.audioPlayer.duration) ? slot.duration : slot.audioPlayer.duration; } else if (slot.type === 'youtube' && slot.ytPlayer?.getPlayerState) { const s = slot.ytPlayer.getPlayerState(); isPlaying = s === 1 || s === 3; currentTime = slot.ytPlayer.getCurrentTime() || 0; duration = slot.ytPlayer.getDuration() || 0; } slot.duration = duration; if (isPlaying) { ui.playIcon.classList.add('hidden'); ui.pauseIcon.classList.remove('hidden'); } else { ui.playIcon.classList.remove('hidden'); ui.pauseIcon.classList.add('hidden'); stopUpdatingUI(); } ui.seekBar.max = duration; ui.seekBar.value = currentTime; ui.currentTimeEl.textContent = formatTime(currentTime); ui.durationEl.textContent = formatTime(duration); }
         function setGain(index, gainValue) { const slot = app.slots[index]; if (!slot || !slot.type) return; gainValue = Math.max(0, Math.min(2, gainValue)); slot.gain = gainValue; if (slot.type === 'audio' && app.audio.isSetup) { app.audio.gains[index].gain.setValueAtTime(gainValue, app.audio.context.currentTime); } else if (slot.type === 'youtube' && slot.ytPlayer?.setVolume) { slot.ytPlayer.setVolume(gainValue * 50); } updateGainSliderUI(index); }
         
+        // --- MODIFICA #3: Logica colore aggiornata ---
         function updateGainSliderUI(index) {
             const container = ui.gainContainers[index];
             if (!container) return;
@@ -165,28 +165,32 @@
             thumb.style.bottom = `calc(${percentage}% - 2px)`;
             const isDefaultGain = Math.abs(gainValue - 1.0) < 0.01;
             
+            // La fonte di verità per decidere se è in play è l'activeSlotIndex
             const isPlaying = (app.activeSlotIndex === index);
             
             let baseHue = 145; 
             let baseSaturation = 60; 
+            // Se sta suonando, parte da un verde più acceso, altrimenti da un grigio scuro
             let baseLightness = isPlaying ? 50 : 22; 
             
             let finalColor;
 
             if (isDefaultGain) {
-                 finalColor = isPlaying ? `hsl(${baseHue}, ${baseSaturation}%, 42%)` : '';
+                 finalColor = isPlaying ? `hsl(${baseHue}, ${baseSaturation}%, 42%)` : ''; // Usa colore di default del CSS
             } else {
-                if (gainValue > 1.0) {
+                if (gainValue > 1.0) { // Aumento Gain
                     const boostRatio = (gainValue - 1.0);
                     const newLightness = baseLightness + (25 * boostRatio);
                     finalColor = `hsl(${baseHue}, ${baseSaturation}%, ${newLightness}%)`;
-                } else {
+                } else { // Taglio Gain
                     const cutRatio = (1.0 - gainValue);
+                    // Valore ridotto da 15 a 10 per un verde meno scuro
                     const newLightness = baseLightness - (10 * cutRatio); 
                     finalColor = `hsl(${baseHue}, ${baseSaturation}%, ${newLightness}%)`;
                 }
             }
             
+            // Applica il colore calcolato
             container.style.backgroundColor = finalColor;
             ui.playButtons[index].style.backgroundColor = finalColor;
 
@@ -201,12 +205,13 @@
         const parseYoutubeId = (url) => { const match = url.match(/^.*(?:youtu.be(?:\.com)?\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]{11}).*/); return (match && match[1]) ? match[1] : null; };
         const clearSlot = (index) => { const slot = app.slots[index]; if (slot.titlePollInterval) clearInterval(slot.titlePollInterval); if (slot.type === 'audio' && slot.audioPlayer.src) { URL.revokeObjectURL(slot.audioPlayer.src); slot.audioPlayer.removeAttribute('src'); } else if (slot.type === 'youtube' && slot.ytPlayer?.stopVideo) { slot.ytPlayer.stopVideo(); } slot.type = null; ui.filenameDisplays[index].textContent = ''; setGain(index, 1.0); };
         
+        // --- MODIFICA #1: Aggiunto reset del colore di sfondo in clearAllFiles ---
         const clearAllFiles = () => {
             stopAll();
             for (let i = 0; i < 4; i++) {
                 clearSlot(i);
                 ui.playButtons[i].disabled = true;
-                ui.playButtons[i].style.backgroundColor = '';
+                ui.playButtons[i].style.backgroundColor = ''; // Resetta il colore
             }
             app.activeSlotIndex = -1;
             updatePlayerUI();
@@ -225,5 +230,20 @@
         initApp();
     });
     </script>
+
+<!-- iOS-friendly file input handler -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                (navigator.userAgent.includes('Macintosh') && 'ontouchend' in document);
+
+  document.querySelectorAll('.file-input').forEach((input) => {
+    if (isIOS) {
+      input.removeAttribute('accept'); // sicurezza: rimuove anche se non presente
+    }
+  });
+});
+</script>
+
 </body>
 </html>
