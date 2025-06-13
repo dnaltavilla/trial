@@ -45,8 +45,8 @@
 <body class="bg-gray-900 text-gray-200 flex items-center justify-center">
     <div class="main-container w-full h-full p-2 sm:p-4">
         <div class="flex-shrink-0 flex justify-between items-center pb-2 px-2">
-            <div><h1 class="text-xl sm:text-2xl font-bold tracking-wider text-white">FireSTUDIO <span class="font-light text-orange-400">myREFERENCE</span></h1><p class="text-xs text-gray-500"><a href="http://www.firemusic.it/">by Marco Masdea - Fire Music - Palmi (RC) </a><button id="creditsBtn" class="ml-2 p-1 rounded-full text-gray-500 hover:text-white hover:bg-gray-700 transition-colors inline-block align-middle" data-i18n-title="creditsBtnTitle" title="Crediti"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.11a.75.75 0 01.897-.534 4.5 4.5 0 012.89 2.89.75.75 0 01-1.428.322 3 3 0 00-1.927-1.927.75.75 0 01-.534-.897zM10 4.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11z" clip-rule="evenodd" /></svg></button><button id="globalHelpBtn" class="ml-2 p-1 rounded-full text-gray-500 hover:text-white hover:bg-gray-700 transition-colors inline-block align-middle" data-i18n-title="helpBtnTitle" title="Aiuto"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></button></p></div>
-            <div class="flex items-center gap-5">
+            <div><h1 class="text-xl sm:text-2xl font-bold tracking-wider text-white">FireSTUDIO <span class="font-light text-orange-400">myREFERENCE</span></h1><p class="text-xs text-gray-500"><a href="http://www.firemusic.it/">by Marco Masdea - Fire Music - Palmi (RC) </a><button id="globalHelpBtn" class="ml-2 p-1 rounded-full text-gray-500 hover:text-white hover:bg-gray-700 transition-colors inline-block align-middle" data-i18n-title="helpBtnTitle" title="Aiuto"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></button></p></div>
+            <div class="flex items-center gap-4 sm:gap-5">
                 <div class="header-btn-container">
                     <button id="clearOrResetBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors"></button>
                     <span id="clearOrResetLabel" class="header-btn-label"></span>
@@ -56,12 +56,12 @@
                     <span class="header-btn-label" data-i18n="gainLabel">Gain</span>
                 </div>
                  <div class="header-btn-container">
-                    <button id="settingsBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-i18n-title="settingsBtnTitle" title="Impostazioni"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg></button>
-                    <span class="header-btn-label" data-i18n="setupLabel">Setup</span>
+                    <button id="langBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors font-bold w-10 h-10 flex items-center justify-center text-sm"></button>
+                    <span class="header-btn-label">Lang</span>
                 </div>
                  <div class="header-btn-container">
-                    <button id="langBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors font-bold w-10 h-10 flex items-center justify-center"></button>
-                    <span class="header-btn-label">Lang</span>
+                    <button id="settingsBtn" class="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-i18n-title="settingsBtnTitle" title="Impostazioni"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg></button>
+                    <span class="header-btn-label" data-i18n="setupLabel">Setup</span>
                 </div>
             </div>
         </div>
@@ -120,16 +120,15 @@
     </div>
     <div id="youtube-players" class="absolute -left-full"><div id="yt-player-0"></div><div id="yt-player-1"></div><div id="yt-player-2"></div><div id="yt-player-3"></div></div>
     <div id="youtubeModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-4 text-white" data-i18n="youtubeModalTitle">Incolla Link YouTube</h2><input type="url" id="youtubeLinkInput" class="w-full bg-gray-700 rounded-md p-3 text-white placeholder-gray-400" placeholder="https://www.youtube.com/watch?v=..."><div class="flex justify-end gap-4 mt-6"><button id="cancelYoutubeBtn" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors" data-i18n="cancelBtn">Annulla</button><button id="confirmYoutubeBtn" class="bg-orange-600 hover:bg-orange-500 text-white font-bold py-2 px-6 rounded-lg transition-colors" data-i18n="confirmBtn">Conferma</button></div></div></div>
-    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-6 text-white" data-i18n="settingsModalTitle">Impostazioni</h2><div class="space-y-4"><div class="flex items-center justify-between"><label for="autoSkipSwitch" class="text-lg" data-i18n="autoSkipLabel">Salto Automatico</label><button id="autoSkipSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="autoSkipSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div><div class="flex items-center justify-between"><label for="autoSkipDuration" data-i18n="autoSkipDurationLabel">Durata Auto-Skip (s)</label><input type="number" id="autoSkipDuration" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div><div class="flex items-center justify-between"><label for="skipInterval" data-i18n="skipIntervalLabel">Intervallo Salto (s)</label><input type="number" id="skipInterval" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div><div class="flex items-center justify-between"><label for="keepScreenOnSwitch" class="text-lg" data-i18n="keepScreenOnLabel">Mantieni Schermo Attivo</label><button id="keepScreenOnSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="keepScreenOnSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div><div class="pt-4 border-t border-gray-700"><button id="autoGainBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-lg transition-colors" data-i18n="autoGainBtn">Gain Automatico (BETA)</button></div></div><button id="closeSettingsBtn" class="mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity" data-i18n="closeBtn">Chiudi</button></div></div>
+    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-6 text-white" data-i18n="settingsModalTitle">Impostazioni</h2><div class="space-y-4"><div class="flex items-center justify-between"><label for="autoSkipSwitch" class="text-lg" data-i18n="autoSkipLabel">Salto Automatico</label><button id="autoSkipSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="autoSkipSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div><div class="flex items-center justify-between"><label for="autoSkipDuration" data-i18n="autoSkipDurationLabel">Durata Auto-Skip (s)</label><input type="number" id="autoSkipDuration" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div><div class="flex items-center justify-between"><label for="skipInterval" data-i18n="skipIntervalLabel">Intervallo Salto (s)</label><input type="number" id="skipInterval" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div><div class="flex items-center justify-between"><label for="keepScreenOnSwitch" class="text-lg" data-i18n="keepScreenOnLabel">Mantieni Schermo Attivo</label><button id="keepScreenOnSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="keepScreenOnSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div><div class="pt-4 border-t border-gray-700"><button id="autoGainBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-lg transition-colors" data-i18n="autoGainBtn">Gain Automatico (BETA)</button></div><div class="pt-4 mt-2 border-t border-gray-700"><button id="showCreditsBtn" class="w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-4 rounded-lg transition-colors" data-i18n="creditsBtnLabel">Crediti</button></div></div><button id="closeSettingsBtn" class="mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity" data-i18n="closeBtn">Chiudi</button></div></div>
     <div id="helpModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50 p-4"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-lg mx-4 overflow-y-auto max-h-screen"><h3 id="helpTitle" class="text-xl font-bold mb-4 text-orange-400"></h3><div id="helpContent" class="text-gray-300"></div><button id="closeHelpBtn" class="mt-6 w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition-colors" data-i18n="helpModalClose">OK</button></div></div>
-    <div id="creditsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50 p-4"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4 text-center"><h2 class="text-2xl font-bold mb-4 text-white" data-i18n="creditsModalTitle">Crediti</h2><p class="text-gray-300"><span data-i18n="creditsLine1">Applicazione ideata da</span><br><b class="text-orange-400">Marco Masdea</b><br>(Fire Music - Palmi RC)</p><p class="text-sm text-gray-500 mt-4" data-i18n="creditsLine2">Progettazione a cura di Marco Masdea e Daniele Altavilla</p><p class="text-xs text-gray-500 mt-8" data-i18n="version">Versione 2.1</p><button id="closeCreditsBtn" class="mt-4 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity" data-i18n="closeBtn">Chiudi</button></div></div>
+    <div id="creditsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50 p-4"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4 text-center"><h2 class="text-2xl font-bold mb-4 text-white" data-i18n="creditsModalTitle">Crediti</h2><p class="text-gray-300"><span data-i18n="creditsLine1">Applicazione ideata da</span><br><b class="text-orange-400">Marco Masdea</b><br>(Fire Music - Palmi RC)</p><p class="text-sm text-gray-500 mt-4" data-i18n="creditsLine2">Progettazione a cura di Marco Masdea e Daniele Altavilla</p><p class="text-xs text-gray-500 mt-8" data-i18n="version">Versione 2.1.1</p><button id="closeCreditsBtn" class="mt-4 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity" data-i18n="closeBtn">Chiudi</button></div></div>
     <audio id="audio1"></audio><audio id="audio2"></audio><audio id="audio3"></audio><audio id="audio4"></audio>
 
 <script>
     const translations = {
         en: {
-            // Titles & Labels
-            creditsBtnTitle: "Credits",
+            creditsBtnLabel: "Credits",
             helpBtnTitle: "Help",
             clearLabel: "Clear",
             resetLabel: "Reset",
@@ -149,8 +148,6 @@
             playTrack3: "Play / Pause Track 3",
             playTrack4: "Play / Pause Track 4",
             gainSliderTitle: "Adjust gain (drag up/down)",
-            
-            // Modals & Popups
             youtubeModalTitle: "Paste YouTube Link",
             cancelBtn: "Cancel",
             confirmBtn: "Confirm",
@@ -169,10 +166,8 @@
             creditsModalTitle: "Credits",
             creditsLine1: "Application conceived by",
             creditsLine2: "Design by Marco Masdea and Daniele Altavilla",
-            version: "Version 2.1",
+            version: "Version 2.1.1",
             helpModalClose: "OK",
-            
-            // Help Modal Content
             helpTitle: "Commands Guide",
             helpLi1Title: "Loading Tracks",
             helpLi1Content: "Use the ♫ (local file) and ▶ (YouTube link) buttons to load your reference tracks into the 4 available slots.",
@@ -189,8 +184,7 @@
             helpSuggestion: "Tip: Long-press a top-bar icon for a quick guide on that specific command."
         },
         it: {
-            // Titles & Labels
-            creditsBtnTitle: "Crediti",
+            creditsBtnLabel: "Crediti",
             helpBtnTitle: "Aiuto",
             clearLabel: "Pulisci",
             resetLabel: "Reset",
@@ -210,8 +204,6 @@
             playTrack3: "Riproduci / Pausa Traccia 3",
             playTrack4: "Riproduci / Pausa Traccia 4",
             gainSliderTitle: "Regola gain (trascina su/giù)",
-
-            // Modals & Popups
             youtubeModalTitle: "Incolla Link YouTube",
             cancelBtn: "Annulla",
             confirmBtn: "Conferma",
@@ -230,10 +222,8 @@
             creditsModalTitle: "Crediti",
             creditsLine1: "Applicazione ideata da",
             creditsLine2: "Progettazione a cura di Marco Masdea e Daniele Altavilla",
-            version: "Versione 2.1",
+            version: "Versione 2.1.1",
             helpModalClose: "OK",
-
-            // Help Modal Content
             helpTitle: "Guida ai Comandi",
             helpLi1Title: "Caricamento Tracce",
             helpLi1Content: "Usa i pulsanti ♫ (file locale) e ▶ (link YouTube) per caricare le tue tracce di riferimento nei 4 slot disponibili.",
@@ -292,10 +282,9 @@
                 clearOrResetBtn: query('#clearOrResetBtn'),
                 clearOrResetLabel: query('#clearOrResetLabel'), 
                 toggleGainViewBtn: query('#toggleGainViewBtn'), 
-                creditsBtn: query('#creditsBtn'), 
                 globalHelpBtn: query('#globalHelpBtn'),
                 langBtn: query('#langBtn'),
-                settings: { modal: query('#settingsModal'), openBtn: query('#settingsBtn'), closeBtn: query('#closeSettingsBtn'), autoSkipSwitch: query('#autoSkipSwitch'), autoSkipSwitchKnob: query('#autoSkipSwitchKnob'), autoSkipDurationInput: query('#autoSkipDuration'), skipIntervalInput: query('#skipInterval'), keepScreenOnSwitch: query('#keepScreenOnSwitch'), keepScreenOnSwitchKnob: query('#keepScreenOnSwitchKnob'), autoGainBtn: query('#autoGainBtn'), }, 
+                settings: { modal: query('#settingsModal'), openBtn: query('#settingsBtn'), closeBtn: query('#closeSettingsBtn'), autoSkipSwitch: query('#autoSkipSwitch'), autoSkipSwitchKnob: query('#autoSkipSwitchKnob'), autoSkipDurationInput: query('#autoSkipDuration'), skipIntervalInput: query('#skipInterval'), keepScreenOnSwitch: query('#keepScreenOnSwitch'), keepScreenOnSwitchKnob: query('#keepScreenOnSwitchKnob'), autoGainBtn: query('#autoGainBtn'), showCreditsBtn: query('#showCreditsBtn') }, 
                 youtube: { modal: query('#youtubeModal'), input: query('#youtubeLinkInput'), confirmBtn: query('#confirmYoutubeBtn'), cancelBtn: query('#cancelYoutubeBtn'), }, 
                 help: { modal: query('#helpModal'), title: query('#helpTitle'), content: query('#helpContent'), closeBtn: query('#closeHelpBtn') }, 
                 credits: { modal: query('#creditsModal'), closeBtn: query('#closeCreditsBtn') } 
@@ -448,9 +437,9 @@
             }
             return `rgb(${result.join(',')})`;
         };
-        const colorStart = [139, 92, 246]; // Viola
-        const colorMid = [16, 185, 129];   // Verde
-        const colorEnd = [249, 115, 22];   // Arancione
+        const colorStart = [139, 92, 246]; 
+        const colorMid = [16, 185, 129];   
+        const colorEnd = [249, 115, 22];   
         
         function updateGainSliderUI(index) {
             const container = ui.gainContainers[index];
@@ -602,8 +591,8 @@
             ui.seekBar.addEventListener('input', (e) => { if (app.activeSlotIndex !== -1) { const s = app.slots[app.activeSlotIndex]; if (s.type === 'audio') s.audioPlayer.currentTime = e.target.value; if (s.type === 'youtube') s.ytPlayer.seekTo(e.target.value, true); }}); 
             ui.settings.openBtn.addEventListener('click',()=>ui.settings.modal.classList.remove('hidden')); 
             ui.settings.closeBtn.addEventListener('click',()=>ui.settings.modal.classList.add('hidden')); 
+            ui.settings.showCreditsBtn.addEventListener('click', () => { ui.settings.modal.classList.add('hidden'); ui.credits.modal.classList.remove('hidden'); });
             ui.clearOrResetBtn.addEventListener('click', () => { if (app.uiState.isGainView) { app.slots.forEach((slot, index) => { if (slot.type) setGain(index, 1.0); }); } else { clearAllFiles(); } }); 
-            ui.creditsBtn.addEventListener('click', () => ui.credits.modal.classList.remove('hidden'));
             ui.credits.closeBtn.addEventListener('click', () => ui.credits.modal.classList.add('hidden')); 
             ui.globalHelpBtn.addEventListener('click', () => showGeneralHelp(false));
             ui.help.closeBtn.addEventListener('click', () => ui.help.modal.classList.add('hidden')); 
