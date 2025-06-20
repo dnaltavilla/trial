@@ -8,6 +8,7 @@
     <title>FireSTUDIO myREFERENCE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="icon.png" type="image/png">
     <script src="https://www.youtube.com/iframe_api"></script>
     <style>
         html, body { height: 100%; overflow: hidden; background-color: #111827; }
@@ -31,7 +32,9 @@
              color: white !important; 
              transform: scale(1.02); 
         }
-        input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; background: #4B5563; border-radius: 3px; outline: none; transition: opacity .2s; }
+        input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; background: #4B5563; border-radius: 3px; outline: none; transition: opacity .2s; 
+            touch-action: pan-y;
+        }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: #F97316; cursor: pointer; border-radius: 50%; border: 2px solid white; }
         .main-container { height: 100vh; display: flex; flex-direction: column; }
         .panel { background-color: #1F2937; border: 1px solid #374151; }
@@ -119,12 +122,18 @@
                 </div>
             </div>
         </div>
+        <div class="flex-shrink-0 text-center py-2 flex justify-center items-center gap-4">
+            <a href="http://www.firemusic.it" target="_blank" rel="noopener noreferrer" class="text-xs text-gray-500 hover:text-orange-400 transition-colors">www.firemusic.it</a>
+            <a href="https://www.instagram.com/firemusicpalmi" target="_blank" rel="noopener noreferrer" title="Instagram" class="text-gray-500 hover:text-orange-400 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+        </div>
     </div>
     <div id="youtube-players" class="absolute -left-full"><div id="yt-player-0"></div><div id="yt-player-1"></div><div id="yt-player-2"></div><div id="yt-player-3"></div></div>
     <div id="youtubeModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-4 text-white" data-i18n="youtubeModalTitle">Incolla Link YouTube</h2><input type="url" id="youtubeLinkInput" class="w-full bg-gray-700 rounded-md p-3 text-white placeholder-gray-400" placeholder="https://www.youtube.com/watch?v=..."><div class="flex justify-end gap-4 mt-6"><button id="cancelYoutubeBtn" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors" data-i18n="cancelBtn">Annulla</button><button id="confirmYoutubeBtn" class="bg-orange-600 hover:bg-orange-500 text-white font-bold py-2 px-6 rounded-lg transition-colors" data-i18n="confirmBtn">Conferma</button></div></div></div>
     <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-6 text-white" data-i18n="settingsModalTitle">Impostazioni</h2><div class="space-y-4"><div class="flex items-center justify-between"><label for="autoSkipSwitch" class="text-lg" data-i18n="autoSkipLabel">Salto Automatico</label><button id="autoSkipSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="autoSkipSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div><div class="flex items-center justify-between"><label for="autoSkipDuration" data-i18n="autoSkipDurationLabel">Durata Auto-Skip (s)</label><input type="number" id="autoSkipDuration" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div><div class="flex items-center justify-between"><label for="skipInterval" data-i18n="skipIntervalLabel">Intervallo Salto (s)</label><input type="number" id="skipInterval" min="1" class="bg-gray-700 rounded-md w-20 p-2 text-center text-white"></div><div class="flex items-center justify-between"><label for="keepScreenOnSwitch" class="text-lg" data-i18n="keepScreenOnLabel">Mantieni Schermo Attivo</label><button id="keepScreenOnSwitch" class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-gray-600"><span id="keepScreenOnSwitchKnob" class="inline-block w-4 h-4 transform bg-white rounded-full transition-transform translate-x-1"></span></button></div><div class="pt-4 border-t border-gray-700"><button id="autoGainBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-lg transition-colors" data-i18n="autoGainBtn">Gain Automatico (BETA)</button></div><div class="pt-4 mt-2 border-t border-gray-700"><button id="showCreditsBtn" class="w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-4 rounded-lg transition-colors" data-i18n="creditsBtnLabel">Crediti</button></div></div><button id="closeSettingsBtn" class="mt-8 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity" data-i18n="closeBtn">Chiudi</button></div></div>
     <div id="helpModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50 p-4"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-lg mx-4 overflow-y-auto max-h-screen"><h3 id="helpTitle" class="text-xl font-bold mb-4 text-orange-400"></h3><div id="helpContent" class="text-gray-300"></div><button id="closeHelpBtn" class="mt-6 w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition-colors" data-i18n="helpModalClose">OK</button></div></div>
-    <div id="creditsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50 p-4"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4 text-center"><h2 class="text-2xl font-bold mb-4 text-white" data-i18n="creditsModalTitle">Crediti</h2><p class="text-gray-300"><span data-i18n="creditsLine1">Applicazione ideata da</span><br><b class="text-orange-400">Marco Masdea</b><br>(Fire Music - Palmi RC)</p><p class="text-sm text-gray-500 mt-4" data-i18n="creditsLine2">Progettazione a cura di Marco Masdea e Daniele Altavilla</p><p class="text-xs text-gray-500 mt-8" data-i18n="version">Versione 2.1.1</p><button id="closeCreditsBtn" class="mt-4 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity" data-i18n="closeBtn">Chiudi</button></div></div>
+    <div id="creditsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50 p-4"><div class="panel rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4 text-center"><h2 class="text-2xl font-bold mb-4 text-white" data-i18n="creditsModalTitle">Crediti</h2><p class="text-gray-300"><span data-i18n="creditsLine1">Applicazione ideata da</span><br><b class="text-orange-400">Marco Masdea</b><br>(Fire Music - Palmi RC)</p><p class="text-sm text-gray-500 mt-4" data-i18n="creditsLine2">Progettazione a cura di Marco Masdea e Daniele Altavilla</p><p class="text-xs text-gray-500 mt-8" data-i18n="version">Versione 2.3</p><button id="closeCreditsBtn" class="mt-4 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-opacity" data-i18n="closeBtn">Chiudi</button></div></div>
     <audio id="audio1"></audio><audio id="audio2"></audio><audio id="audio3"></audio><audio id="audio4"></audio>
 
 <script>
@@ -168,7 +177,7 @@
             creditsModalTitle: "Credits",
             creditsLine1: "Application conceived by",
             creditsLine2: "Design by Marco Masdea and Daniele Altavilla",
-            version: "Version 2.1.1",
+            version: "Version 2.3",
             helpModalClose: "OK",
             helpTitle: "Commands Guide",
             helpLi1Title: "Loading Tracks",
@@ -224,7 +233,7 @@
             creditsModalTitle: "Crediti",
             creditsLine1: "Applicazione ideata da",
             creditsLine2: "Progettazione a cura di Marco Masdea e Daniele Altavilla",
-            version: "Versione 2.1.1",
+            version: "Versione 2.3",
             helpModalClose: "OK",
             helpTitle: "Guida ai Comandi",
             helpLi1Title: "Caricamento Tracce",
@@ -252,6 +261,9 @@
         uiState: { isGainView: false, isDraggingGain: false, dragStartIndex: -1, dragStartY: 0 }
     };
     let ytPlayers = [];
+
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
     let ytApiReady = false;
     const ICONS = { clear: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>`, reset: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M4 4l5 5M20 20l-5-5" /></svg>` };
     
@@ -326,7 +338,7 @@
             });
         }
 
-        function setupAudioProcessing() { if (app.audio.isSetup) return; try { app.audio.context = new (window.AudioContext || window.webkitAudioContext)(); app.slots.forEach((slot, index) => { app.audio.sources[index] = app.audio.context.createMediaElementSource(slot.audioPlayer); app.audio.analysers[index] = app.audio.context.createAnalyser(); app.audio.gains[index] = app.audio.context.createGain(); app.audio.analysers[index].fftSize = 2048; app.audio.sources[index].connect(app.audio.analysers[index]).connect(app.audio.gains[index]).connect(app.audio.context.destination); }); app.audio.isSetup = true; } catch (e) { console.error("Errore Web Audio API:", e); ui.settings.autoGainBtn.style.display = 'none'; } }
+        function setupAudioProcessing() { if (app.audio.isSetup) return; try { app.audio.context = new (window.AudioContext || window.webkitAudioContext)(); app.slots.forEach((slot, index) => { if (!app.audio.sources[index]) app.audio.sources[index] = app.audio.context.createMediaElementSource(slot.audioPlayer); app.audio.analysers[index] = app.audio.context.createAnalyser(); app.audio.gains[index] = app.audio.context.createGain(); app.audio.analysers[index].fftSize = 2048; app.audio.sources[index].connect(app.audio.analysers[index]).connect(app.audio.gains[index]).connect(app.audio.context.destination); }); app.audio.isSetup = true; } catch (e) { console.error("Errore Web Audio API:", e); ui.settings.autoGainBtn.style.display = 'none'; } }
         const startUpdatingUI = () => { if (!app.masterTimeUpdater) app.masterTimeUpdater = setInterval(updatePlayerUI, 250); };
         const stopUpdatingUI = () => { clearInterval(app.masterTimeUpdater); app.masterTimeUpdater = null; };
 
@@ -363,6 +375,15 @@
                 stopUpdatingUI();
             } else {
                 stopAll(index); 
+                
+                // --- INIZIO DELLA CORREZIONE ---
+                // Su dispositivi Apple, l'AudioContext potrebbe essere sospeso.
+                // Lo riattiviamo esplicitamente qui, all'interno del gesto utente (click).
+                if (app.audio.isSetup && app.audio.context.state === 'suspended') {
+                    app.audio.context.resume();
+                }
+                // --- FINE DELLA CORREZIONE ---
+
                 if (slot.type === 'audio') slot.audioPlayer.play();
                 else slot.ytPlayer.playVideo();
                 app.activeSlotIndex = index;
